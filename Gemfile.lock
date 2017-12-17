@@ -1,0 +1,36 @@
+PATH
+  remote: .
+  specs:
+    neo-ruby (0.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
+    hashdiff (0.3.7)
+    minitest (5.10.3)
+    public_suffix (3.0.1)
+    rake (10.5.0)
+    safe_yaml (1.0.4)
+    vcr (4.0.0)
+    webmock (3.1.1)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.16.a)
+  minitest (~> 5.0)
+  neo-ruby!
+  rake (~> 10.0)
+  vcr (~> 4.0)
+  webmock (~> 3.1)
+
+BUNDLED WITH
+   1.16.0.pre.3
