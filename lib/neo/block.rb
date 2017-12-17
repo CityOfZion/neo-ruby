@@ -8,6 +8,13 @@ module Neo
       def height
         Neo.rpc 'getblockcount'
       end
+
+      # Returns the hash of the tallest block in the main chain.
+      #
+      # @return [String]
+      def best_hash
+        Neo.rpc 'getbestblockhash'
+      end
     end
   end
 end

@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.16.a'
   spec.add_development_dependency 'minitest', '~> 5.0'
+  spec.add_development_dependency 'minitest-autotest'
+  spec.add_development_dependency 'minitest-ci'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'vcr', '~> 4.0'
   spec.add_development_dependency 'webmock', '~> 3.1'

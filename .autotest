@@ -1,0 +1,3 @@
+Autotest.add_hook :initialize do |at|
+  at.testlib = "test/test_helper"
+end
