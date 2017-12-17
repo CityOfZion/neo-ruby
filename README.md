@@ -11,8 +11,9 @@
 </p>
 
 <p align="center">
-  <a href="https://circleci.com/gh/CityOfZion/neo-ruby">
-    <img src="https://circleci.com/gh/CityOfZion/neo-ruby.svg?style=svg">
+
+  <a href="http://inch-ci.org/github/CityOfZion/neo-ruby">
+    <img src="http://inch-ci.org/github/CityOfZion/neo-ruby.svg?branch=master">
   </a>
 </p>
 
