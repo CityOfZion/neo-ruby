@@ -21,6 +21,8 @@
 
 ## Overview
 
+**Under heavy development!**
+
 `neo-ruby` is a Ruby library for interacting with the NEO blockchain.
 
 ## Installation

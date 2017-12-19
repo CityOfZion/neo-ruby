@@ -10,5 +10,9 @@ require 'neo'
 # require "pry"
 # Pry.start
 
+def reload!
+  load 'neo.rb'
+end
+
 require 'irb'
 IRB.start(__FILE__)
