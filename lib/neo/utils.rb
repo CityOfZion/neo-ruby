@@ -10,6 +10,11 @@ module Neo
       reverse ? reverse_hex_string(hex) : hex
     end
 
+    def self.read_string(io)
+      length = read_variable_integer(io)
+      io.read(length)
+    end
+
     def self.read_variable_integer(io)
       length = read_uint8(io)
       case length
@@ -34,6 +39,11 @@ module Neo
 
     def self.read_uint64(io)
       io.read(8).unpack('Q<').first
+    end
+
+    # TODO: Do better than this?
+    def read_fixed8(io)
+      read_uint64(io) / 100000000.0
     end
 
     # Provides Base58 encoding/decoding

@@ -95,5 +95,12 @@ describe Neo::Block do
     it 'finds the exclusive data of a miner transaction' do
       @block.transactions[0].nonce.must_equal 1_326_021_989
     end
+
+    it 'finds the exclusive data of a publish transaction' do
+      VCR.use_cassette 'rpc/getblock_publish', match_requests_on: [:query] do
+        block = Neo::Block.get 232
+        block.transactions[1].name.must_equal 'Lock'
+      end
+    end
   end
 end

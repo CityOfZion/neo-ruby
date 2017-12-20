@@ -21,8 +21,10 @@ module Neo
               when 0x01 then :issue_transaction
               when 0x02 then :claim_transaction
               when 0x20 then :enrollment_transaction
+              when 0x24 then :vote_transaction
               when 0x40 then :register_transaction
               when 0x80 then :contract_transaction
+              when 0xb0 then :agency_transaction
               when 0xd0 then :publish_transaction
               when 0xd1 then :invocation_transaction
               end
@@ -35,10 +37,10 @@ module Neo
       self
     end
 
-    # TODO: Handle all the extra data types
+    # TODO: Refactor this mess
     def read_exclusive_data(io)
       case type
-      when :miner_transaction
+      when :miner_transaction, :issue_transaction
         @nonce = Utils.read_uint32(io)
         singleton_class.send :attr_reader, :nonce
       when :claim_transaction
@@ -51,10 +53,38 @@ module Neo
           }
         end
         singleton_class.send :attr_reader, :claims
+      when :enrollment_transaction
+        # TODO: This should be parsed correctly (ec_point)
+        @public_key = Utils.read_hex_string(io, 33)
+        singleton_class.send :attr_reader, :public_key
+      when :register_transaction
+        @asset_type = Utils.read_uint8(io)
+        @name = Utils.read_string(io)
+        @amount = Utils.read_uint64(io)
+        @issuer = Utils.read_hex_string(io, 33)
+        @admin = Utils.read_hex_string(io, 20)
+      when :publish_transaction
+        # TODO: Refactor this into contract model?
+        code_length = Utils.read_variable_integer(io)
+        @function_code = Utils.read_hex_string(io, code_length)
+        params_length = Utils.read_variable_integer(io)
+        @params_list = Utils.read_hex_string(io, params_length)
+        @return_type = Utils.read_hex_string(io, 1)
+        @needs_storage = version >= 1 ? Utils.read_boolean(io) : false
+        @name = Utils.read_string(io)
+        @code_version = Utils.read_string(io)
+        @author = Utils.read_string(io)
+        @email = Utils.read_string(io)
+        @description = Utils.read_string(io)
+        singleton_class.send :attr_reader, :function_code, :needs_storage, :name, :code_version,
+                             :author, :email, :description
+      when :invocation_transaction
+        @script = Script.read(io)
+        @gas = Utils.read_fixed8(io)
       end
     end
 
-    # TODO: Refactor hash to object here
+    # TODO: Refactor hash to tx attribute model here
     def read_attributes(io)
       count = Utils.read_variable_integer(io)
       count.times do
@@ -70,7 +100,7 @@ module Neo
       end
     end
 
-    # TODO: Refactor hash to input object
+    # TODO: Refactor hash to input model
     def read_inputs(io)
       count = Utils.read_variable_integer(io)
       count.times do
@@ -81,7 +111,7 @@ module Neo
       end
     end
 
-    # TODO: Refactor hash to output object
+    # TODO: Refactor hash to output model
     def read_outputs(io)
       count = Utils.read_variable_integer(io)
       count.times do
