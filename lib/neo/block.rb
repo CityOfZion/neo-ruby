@@ -1,6 +1,3 @@
-require 'neo/key'
-require 'neo/utils'
-
 module Neo
   # Represents a block in the Neo blockchain
   class Block
@@ -11,7 +8,9 @@ module Neo
                 :time_stamp,
                 :height,
                 :nonce,
-                :next_consensus
+                :next_consensus,
+                :script,
+                :transactions
 
     alias consensus_data nonce
 
@@ -19,18 +18,24 @@ module Neo
     # @param data [Hash] Ruby hash of parsed JSON format block data
     def initialize(data = nil)
       @data = StringIO.new [data].pack('H*')
+      @transactions = []
       parse_header
     end
 
     def parse_header
-      @version, * = data.read(4).unpack('V')
-      @previous_block_hash = Utils.bin_to_hex(data.read(32))
-      @merkle_root = Utils.bin_to_hex(data.read(32))
-      @time_stamp, * = data.read(4).unpack('V')
-      @height, * = data.read(4).unpack('V')
-      @nonce = Utils.bin_to_hex(data.read(8))
-      @next_consensus = Key.script_hash_to_address(data.read(20).unpack('H*').first)
+      @version = Utils.read_uint32(data)
+      @previous_block_hash = Utils.read_hex_string(data, 32, true)
+      @merkle_root = Utils.read_hex_string(data, 32, true)
+      @time_stamp = Utils.read_uint32(data)
+      @height = Utils.read_uint32(data)
+      @nonce = Utils.read_hex_string(data, 8, true)
+      @next_consensus = Key.script_hash_to_address(Utils.read_hex_string(data, 20))
       data.read(1)
+      @script = Script.read(data)
+      transaction_count = Utils.read_variable_integer(data)
+      transaction_count.times do
+        @transactions << Transaction.read(data)
+      end
     end
 
     class << self

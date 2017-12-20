@@ -1,10 +1,42 @@
 module Neo
   # Utility module
   module Utils
-    def self.bin_to_hex(bin)
-      bin.unpack('H*').first.scan(/../).reverse.join
+    def self.reverse_hex_string(hex)
+      hex.scan(/../).reverse.join
     end
 
+    def self.read_hex_string(io, length, reverse = false)
+      hex = io.read(length).unpack('H*').first
+      reverse ? reverse_hex_string(hex) : hex
+    end
+
+    def self.read_variable_integer(io)
+      length = read_uint8(io)
+      case length
+      when 0xfd then read_uint16(io)
+      when 0xfe then read_uint32(io)
+      when 0xff then read_uint64(io) # TODO: Test this?
+      else length
+      end
+    end
+
+    def self.read_uint8(io)
+      io.read(1).unpack('C').first
+    end
+
+    def self.read_uint16(io)
+      io.read(2).unpack('v').first
+    end
+
+    def self.read_uint32(io)
+      io.read(4).unpack('V').first
+    end
+
+    def self.read_uint64(io)
+      io.read(8).unpack('Q<').first
+    end
+
+    # Provides Base58 encoding/decoding
     module Base58
       ALPHABET = %w[
         1 2 3 4 5 6 7 8 9
@@ -19,7 +51,7 @@ module Neo
       BASE = ALPHABET.length
 
       def self.encode(n)
-        return ALPHABET[0] if n == 0
+        return ALPHABET[0] if n.zero?
         buffer = ''
         while n > 0
           remainder = n % BASE
@@ -42,6 +74,6 @@ module Neo
       end
 
       class InvalidCharacterError < RuntimeError; end
-end
+    end
   end
 end

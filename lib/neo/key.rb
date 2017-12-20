@@ -1,5 +1,4 @@
 require 'openssl'
-require 'neo/utils'
 
 module Neo
   # Represents a Neo private/public key pair

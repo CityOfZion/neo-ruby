@@ -65,5 +65,35 @@ describe Neo::Block do
     it 'finds the next miners hash' do
       @block.next_consensus.must_equal 'AdyQbbn6ENjqWDa5JNYMwN3ikNcA4JeZdk'
     end
+
+    it 'finds verification script' do
+      @block.script.verify.must_equal '55210209e7fd41dfb5c2f8dc72eb30358ac100ea8c72da18847befe06eade68cebfcb9210327da12b5c40200e9f65569476bbff2218da4f32548ff43b6387ec1416a231ee821034ff5ceeac41acf22cd5ed2da17a6df4dd8358fcb2bfb1a43208ad0feaab2746b21026ce35b29147ad09e4afe4ec4a7319095f08198fa8babbe3c56e970b143528d2221038dddc06ce687677a53d54f096d2591ba2302068cf123c1f2d75c2dddc542557921039dafd8571a641058ccc832c5e2111ea39b09c0bde36050914384f7a48bce9bf92102d02b1873a0863cd042cc717da31cea0d7cf9db32b74d4c72c01b0011503e2e2257ae'
+    end
+
+    it 'finds invocation script' do
+      @block.script.invoke.must_equal '405f70bb1cb06b0038540e1bfe2c38df2b4b6824a0f28512b4ca72ba2763c24b857770525d2013ce538059ac60f003e7e5171f6a26c6130091f5cf37b4c50f9a90405c0cda410b2d1cbadcd008e4ce83c6fa0ac5ec550f15b888f16ddf15a7e324321f83abd1eef044473cd8a794e548dd29ab67d70263b87d2d38dd5c518a1bab4340340247f1b0e396f2097302588ff19d63bbd161cb059ff55d6bc8fbeaf98f436c93dafd8f35abfccfcf07e110cda246079a426aa74024b9fc76a6809af43a378f403fc6b224c5e84c80f076058125fc8e591c33802572d910b1d2fa842121a52112cbf342a51c850e29adfd033dd3d8680bc4265983f5464df9e99ee8f5597d1c1340642a65097047c22f9edfb23844b3625f873fda7f1e69ed4ac2b18ea7be8bc32482135daed7e5616639fb6f1f588ddb2e09c00a17327005ea296dce43444845c6'
+    end
+
+    it 'finds the right number of transactions' do
+      @block.transactions.size.must_equal 4
+    end
+
+    it 'finds the transaction type' do
+      @block.transactions[0].type.must_equal :miner_transaction
+      @block.transactions[1].type.must_equal :contract_transaction
+      @block.transactions[3].type.must_equal :claim_transaction
+    end
+
+    it 'finds the transaction version' do
+      @block.transactions[0].version.must_equal 0
+    end
+
+    it 'finds the exclusive data of a miner transaction' do
+      @block.transactions[0].nonce.must_equal 1_326_021_989
+    end
+
+    it 'finds the exclusive data of a miner transaction' do
+      @block.transactions[0].nonce.must_equal 1_326_021_989
+    end
   end
 end
