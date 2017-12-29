@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'neo-ruby'
   spec.version       = Neo.version
   spec.authors       = ['Jason L Perry']
-  spec.email         = ['jason@cityofzion.io']
+  spec.email         = ['jason@suncoast.io']
 
   spec.summary       = 'Neo Ruby Library'
   spec.description   = 'A Ruby library for interacting with the NEO blockchain.'
@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest', '~> 5.0'
   spec.add_development_dependency 'minitest-autotest'
   spec.add_development_dependency 'minitest-ci'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'vcr', '~> 4.0'
   spec.add_development_dependency 'webmock', '~> 3.1'
 end
