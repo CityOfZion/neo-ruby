@@ -17,22 +17,22 @@ module Neo
     # Construct a new block from given data
     # @param data [Hash] Ruby hash of parsed JSON format block data
     def initialize(data = nil)
-      @data = StringIO.new [data].pack('H*')
+      @data = Utils::DataReader.new(data)
       @transactions = []
       parse_header
     end
 
     def parse_header
-      @version = Utils.read_uint32(data)
-      @previous_block_hash = Utils.read_hex_string(data, 32, true)
-      @merkle_root = Utils.read_hex_string(data, 32, true)
-      @time_stamp = Utils.read_uint32(data)
-      @height = Utils.read_uint32(data)
-      @nonce = Utils.read_hex_string(data, 8, true)
-      @next_consensus = Key.script_hash_to_address(Utils.read_hex_string(data, 20))
-      data.read(1)
-      @script = Script.read(data)
-      transaction_count = Utils.read_variable_integer(data)
+      @version = data.read_uint32
+      @previous_block_hash = data.read_hex 32, true
+      @merkle_root = data.read_hex 32, true
+      @time_stamp = data.read_uint32
+      @height = data.read_uint32
+      @nonce = data.read_hex 8, true
+      @next_consensus = Key.script_hash_to_address data.read_hex(20)
+      data.read_byte
+      @script = Script.read data
+      transaction_count = data.read_vint
       transaction_count.times do
         @transactions << Transaction.read(data)
       end

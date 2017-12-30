@@ -5,47 +5,6 @@ module Neo
       hex.scan(/../).reverse.join
     end
 
-    def self.read_hex_string(io, length, reverse = false)
-      hex = io.read(length).unpack('H*').first
-      reverse ? reverse_hex_string(hex) : hex
-    end
-
-    def self.read_string(io)
-      length = read_variable_integer(io)
-      io.read(length)
-    end
-
-    def self.read_variable_integer(io)
-      length = read_uint8(io)
-      case length
-      when 0xfd then read_uint16(io)
-      when 0xfe then read_uint32(io)
-      when 0xff then read_uint64(io) # TODO: Test this?
-      else length
-      end
-    end
-
-    def self.read_uint8(io)
-      io.read(1).unpack('C').first
-    end
-
-    def self.read_uint16(io)
-      io.read(2).unpack('v').first
-    end
-
-    def self.read_uint32(io)
-      io.read(4).unpack('V').first
-    end
-
-    def self.read_uint64(io)
-      io.read(8).unpack('Q<').first
-    end
-
-    # TODO: Do better than this?
-    def read_fixed8(io)
-      read_uint64(io) / 100000000.0
-    end
-
     # Provides Base58 encoding/decoding
     module Base58
       ALPHABET = %w[

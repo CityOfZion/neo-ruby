@@ -15,8 +15,8 @@ module Neo
       @scripts = []
     end
 
-    def read(io)
-      @type = case Utils.read_uint8(io)
+    def read(data)
+      @type = case data.read_uint8
               when 0x00 then :miner_transaction
               when 0x01 then :issue_transaction
               when 0x02 then :claim_transaction
@@ -28,112 +28,109 @@ module Neo
               when 0xd0 then :publish_transaction
               when 0xd1 then :invocation_transaction
               end
-      @version = Utils.read_uint8(io)
-      read_exclusive_data(io)
-      read_attributes(io)
-      read_inputs(io)
-      read_outputs(io)
-      read_scripts(io)
+      @version = data.read_uint8
+      read_exclusive_data(data)
+      read_attributes(data)
+      read_inputs(data)
+      read_outputs(data)
+      read_scripts(data)
       self
     end
 
     # TODO: Refactor this mess
-    def read_exclusive_data(io)
+    def read_exclusive_data(data)
       case type
       when :miner_transaction, :issue_transaction
-        @nonce = Utils.read_uint32(io)
+        @nonce = data.read_uint32
         singleton_class.send :attr_reader, :nonce
       when :claim_transaction
-        count = Utils.read_variable_integer(io)
+        count = data.read_vint
         @claims = []
         count.times do
           @claims << {
-            previous_hash: Utils.read_hex_string(io, 32),
-            previous_index: Utils.read_uint16(io)
+            previous_hash: data.read_hex(32),
+            previous_index: data.read_uint16
           }
         end
         singleton_class.send :attr_reader, :claims
       when :enrollment_transaction
         # TODO: This should be parsed correctly (ec_point)
-        @public_key = Utils.read_hex_string(io, 33)
+        @public_key = data.read_hex(33)
         singleton_class.send :attr_reader, :public_key
       when :register_transaction
-        @asset_type = Utils.read_uint8(io)
-        @name = Utils.read_string(io)
-        @amount = Utils.read_uint64(io)
-        @issuer = Utils.read_hex_string(io, 33)
-        @admin = Utils.read_hex_string(io, 20)
+        @asset_type = data.read_uint8
+        @name = data.read_string
+        @amount = data.read_uint64
+        @issuer = data.read_hex 33
+        @admin = data.read_hex 20
       when :publish_transaction
         # TODO: Refactor this into contract model?
-        code_length = Utils.read_variable_integer(io)
-        @function_code = Utils.read_hex_string(io, code_length)
-        params_length = Utils.read_variable_integer(io)
-        @params_list = Utils.read_hex_string(io, params_length)
-        @return_type = Utils.read_hex_string(io, 1)
-        @needs_storage = version >= 1 ? Utils.read_boolean(io) : false
-        @name = Utils.read_string(io)
-        @code_version = Utils.read_string(io)
-        @author = Utils.read_string(io)
-        @email = Utils.read_string(io)
-        @description = Utils.read_string(io)
+        @function_code = data.read_hex
+        @params_list = data.read_hex
+        @return_type = data.read_hex 1
+        @needs_storage = version >= 1 ? data.read_bool : false
+        @name = data.read_string
+        @code_version = data.read_string
+        @author = data.read_string
+        @email = data.read_string
+        @description = data.read_string
         singleton_class.send :attr_reader, :function_code, :needs_storage, :name, :code_version,
                              :author, :email, :description
       when :invocation_transaction
-        @script = Script.read(io)
-        @gas = Utils.read_fixed8(io)
+        @script = Script.read(data)
+        @gas = data.read_fixed8
       end
     end
 
     # TODO: Refactor hash to tx attribute model here
-    def read_attributes(io)
-      count = Utils.read_variable_integer(io)
+    def read_attributes(data)
+      count = data.read_vint
       count.times do
-        usage = Utils.read_uint8(io)
+        usage = data.read_uint8
         case usage
         when 0x00, 0x02, 0x03, 0x30, 0xa1..0xaf
-          @attributes << { usage: usage, data: Utils.read_hex_string(io, 32) }
+          @attributes << { usage: usage, data: data.read_hex(32) }
         else
-          length = Utils.read_uint8(io)
           # TODO: Parse into plain string?
-          @attributes << { usage: usage, data: Utils.read_hex_string(io, length) }
+          @attributes << { usage: usage, data: data.read_hex }
         end
       end
     end
 
     # TODO: Refactor hash to input model
-    def read_inputs(io)
-      count = Utils.read_variable_integer(io)
+    def read_inputs(data)
+      count = data.read_vint
       count.times do
         @inputs << {
-          previous_hash: Utils.read_hex_string(io, 32),
-          previous_index: Utils.read_uint16(io)
+          previous_hash: data.read_hex(32),
+          previous_index: data.read_uint16
         }
       end
     end
 
     # TODO: Refactor hash to output model
-    def read_outputs(io)
-      count = Utils.read_variable_integer(io)
+    def read_outputs(data)
+      count = data.read_vint
       count.times do
         @outputs << {
-          asset_id: Utils.read_hex_string(io, 32),
-          value: Utils.read_uint64(io),
-          script_hash: Utils.read_hex_string(io, 20)
+          asset_id: data.read_hex(32),
+          value: data.read_uint64,
+          script_hash: data.read_hex(20)
         }
       end
     end
 
-    def read_scripts(io)
-      count = Utils.read_variable_integer(io)
+    def read_scripts(data)
+      count = data.read_vint
       count.times do
-        @scripts << Script.read(io)
+        @scripts << Script.read(data)
       end
     end
 
     class << self
-      def read(io)
+      def read(data)
         tx = Transaction.new
-        tx.read(io)
+        tx.read(data)
       end
     end
   end
