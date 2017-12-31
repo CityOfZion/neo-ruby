@@ -2,12 +2,8 @@ module Neo
   module Utils
     # Utility class for reading serialized data
     class DataReader
-      def initialize(data)
-        @io = data_to_readable(data)
-      end
-
-      def move_to(position)
-        @io.seek(position, IO::SEEK_SET)
+      def initialize(data, hex = true)
+        @io = data_to_readable(data, hex)
       end
 
       def read_uint8
@@ -55,15 +51,27 @@ module Neo
         read_uint64 / 100_000_000.0
       end
 
+      def read_time
+        Time.at read_uint32
+      end
+
       def read(size, format)
         @io.read(size).unpack(format).first
       end
 
+      def inspect
+        @io.string.unpack('H*').first
+      end
+
+      def move_to(position)
+        @io.seek(position, IO::SEEK_SET)
+      end
+
       private
 
-      def data_to_readable(data)
-        return StringIO.new [data].pack('H*') unless data.respond_to? :read
-        data
+      def data_to_readable(data, hex)
+        return data if data.respond_to? :read
+        StringIO.new hex ? [data].pack('H*') : data
       end
     end
   end

@@ -9,20 +9,20 @@ module Neo
 
   # Stores the Neo configuration.
   class Configuration
-    DEFAULT_SEEDS = YAML.load_file(File.join(File.dirname(__FILE__), 'default_seeds.yml'))
+    DEFAULT_RPC_LIST = YAML.load_file(File.join(File.dirname(__FILE__), 'default_rpc_list.yml'))
 
     def initialize
-      self.seeds = Set.new
+      self.node_list = Set.new
       self.network = 'TestNet'
     end
 
-    attr_accessor :seeds
+    attr_accessor :node_list
 
     attr_reader :network
 
     def network=(net)
       @network = net
-      seeds.merge DEFAULT_SEEDS[net] if DEFAULT_SEEDS.key? net
+      node_list.merge DEFAULT_RPC_LIST[net] if DEFAULT_RPC_LIST.key? net
     end
   end
 

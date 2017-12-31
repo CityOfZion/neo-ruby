@@ -33,4 +33,10 @@ module Neo
   end
 
   module_function :version
+
+  def user_agent
+    "/NEO-RUBY:#{version}/"
+  end
+
+  module_function :user_agent
 end

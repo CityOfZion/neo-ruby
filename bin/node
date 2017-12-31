@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'neo'
+
+Neo.configure { |c| c.network = 'TestNet' }
+
+best_hash = Neo::Block.best_hash
+
+puts "best: #{best_hash}"
+
+EM.run do
+  connections = []
+  Neo::Network::Connection.connect_to_random_node(connections, best_hash)
+end
+
+# require 'irb'
+# IRB.start(__FILE__)

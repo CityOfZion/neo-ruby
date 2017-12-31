@@ -5,6 +5,10 @@ module Neo
       hex.scan(/../).reverse.join
     end
 
+    def self.strip_hex_prefix(hex)
+      hex.sub(/^0x/, '')
+    end
+
     # Provides Base58 encoding/decoding
     module Base58
       ALPHABET = %w[
