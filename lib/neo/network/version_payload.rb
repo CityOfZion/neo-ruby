@@ -7,7 +7,7 @@ module Neo
         @version = 0
         @services = 1
         @timestamp = Time.now
-        @port = port
+        @port = port.to_i
         @nonce = nonce
         @user_agent = Neo.user_agent
         @start_height = start_height

@@ -10,19 +10,28 @@ module Neo
   # Stores the Neo configuration.
   class Configuration
     DEFAULT_RPC_LIST = YAML.load_file(File.join(File.dirname(__FILE__), 'default_rpc_list.yml'))
+    DEFAULT_P2P_LIST = YAML.load_file(File.join(File.dirname(__FILE__), 'default_p2p_list.yml'))
+    DEFAULT_MAGIC = {
+      'MainNet' => 'Ant',
+      'TestNet' => 'Antt'
+    }.freeze
 
     def initialize
-      self.node_list = Set.new
+      self.rpc_nodes = Set.new
+      self.p2p_nodes = Set.new
       self.network = 'TestNet'
+      self.magic_word = DEFAULT_MAGIC[network]
     end
 
-    attr_accessor :node_list
+    attr_accessor :rpc_nodes, :p2p_nodes, :magic_word
 
     attr_reader :network
 
     def network=(net)
       @network = net
-      node_list.merge DEFAULT_RPC_LIST[net] if DEFAULT_RPC_LIST.key? net
+      rpc_nodes.merge DEFAULT_RPC_LIST[net] if DEFAULT_RPC_LIST.key? net
+      p2p_nodes.merge DEFAULT_P2P_LIST[net] if DEFAULT_P2P_LIST.key? net
+      self.magic_word = DEFAULT_MAGIC[net] if DEFAULT_MAGIC.key? net
     end
   end
 

@@ -30,10 +30,9 @@ module Neo
       private
 
       def send_packet(command, payload = '')
-        magic = 'Antt' # TODO: Use correct magic word with Neo.config
         checksum = Digest::SHA256.digest(Digest::SHA256.digest(payload))[0...4]
         header = [
-          magic,
+          Neo.config.magic_word,
           command.to_s,
           payload.bytesize,
           checksum

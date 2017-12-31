@@ -3,15 +3,6 @@ module Neo
     class Connection < EventMachine::Connection
       include Neo::Network::Handler
 
-      # TODO: Move this to Neo.config
-      SEED_LIST = [
-        ['seed1.neo.org', 20_333],
-        ['seed2.neo.org', 20_333],
-        ['seed3.neo.org', 20_333],
-        ['seed4.neo.org', 20_333],
-        ['seed5.neo.org', 20_333]
-      ].freeze
-
       def initialize(host, port, connections, last_hash)
         @host = host
         @port = port
@@ -45,7 +36,7 @@ module Neo
         end
 
         def connect_to_random_node(connections, last_hash = '00' * 32)
-          host, port = *SEED_LIST.sample
+          host, port = Neo.config.p2p_nodes.to_a.sample.split(':')
           connect(host, port, connections, last_hash)
         end
 
