@@ -3,13 +3,10 @@
 require 'bundler/setup'
 require 'neo'
 
-Neo.configure { |c| c.network = 'TestNet' }
-
-best_hash = Neo::Block.best_hash
-
 EM.run do
-  connections = []
-  Neo::Network::Connection.connect_to_random_node(connections, best_hash)
+  Neo.configure { |c| c.network = ENV['NEO_NET'] || 'MainNet' }
+  best_hash = Neo::Block.best_hash
+  Neo::Network::Connection.connect_to_random_node(best_hash)
 end
 
 # require 'irb'

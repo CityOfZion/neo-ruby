@@ -1,15 +1,21 @@
 module Neo
   module Network
-    class LocatorPayload < Payload
+    class LocatorPayload < Message
       attr_accessor :hashes, :stop
 
-      def initialize(hashes = [], stop = nil)
+      def initialize(hashes = [], stop = nil, command = 'getblocks')
         @hashes = hashes
         @stop = stop
+        @command = command
       end
 
-      # TODO: deserialize this.
-      def deserialize(data); end
+      def deserialize(data)
+        count = data.read_vint
+        count.times do
+          @hashes << data.read_hex(32)
+        end
+        @stop = data.read_hex(32)
+      end
 
       def serialize(data)
         data.write_vint hashes.length

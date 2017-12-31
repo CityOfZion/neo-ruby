@@ -1,9 +1,10 @@
 module Neo
   module Network
-    class VersionPayload < Payload
+    class VersionPayload < Message
       attr_accessor :version, :services, :timestamp, :port, :nonce, :user_agent, :start_height, :relay
 
       def initialize(port = nil, nonce = nil, start_height = 0)
+        @command = 'version'
         @version = 0
         @services = 1
         @timestamp = Time.now

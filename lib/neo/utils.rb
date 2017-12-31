@@ -1,3 +1,6 @@
+require 'neo/utils/data_reader'
+require 'neo/utils/data_writer'
+
 module Neo
   # Utility module
   module Utils
