@@ -1,7 +1,5 @@
 module Neo
   module Utils
-    BINARY = Encoding.find('ASCII-8BIT')
-
     # Utility class for writing serialized data
     class DataWriter
       attr_reader :io

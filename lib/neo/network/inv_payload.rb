@@ -1,28 +1,34 @@
 module Neo
   module Network
-    class LocatorPayload < Message
+    class InvPayload < Message
+      TYPES = {
+        0x01 => :transaction,
+        0x02 => :block,
+        0xe0 => :consensus
+      }.freeze
+
       attr_accessor :hashes, :stop
 
-      def initialize(hashes = [], stop = nil, command = 'getblocks')
+      def initialize(type = nil, hashes = [])
+        @type = type
         @hashes = hashes
-        @stop = stop
-        @command = command
+        @command = 'inv'
       end
 
       def deserialize(data)
+        @type = TYPES[data.read_byte]
         count = data.read_vint
         count.times do
           @hashes << data.read_hex(32)
         end
-        @stop = data.read_hex 32
       end
 
       def serialize(data)
+        data.write_byte TYPES.key type
         data.write_vint hashes.length
         hashes.each do |hash|
           data.write_hex hash, true, true
         end
-        data.write_hex stop, true, true if stop
       end
     end
   end

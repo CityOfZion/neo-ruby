@@ -24,7 +24,7 @@ module Neo
           raise 'TODO: handle checksum error'
         end
         @buffer = @buffer[HEAD_SIZE + length..-1] || ''
-        handler.send "on_#{command}", payload
+        handler.send "handle_#{command}", payload
         !@buffer.empty?
       end
     end

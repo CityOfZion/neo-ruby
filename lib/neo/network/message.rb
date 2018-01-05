@@ -5,8 +5,8 @@ module Neo
 
       def payload
         data = Neo::Utils::DataWriter.new
-        serialize(data)
-        data.io.string.force_encoding(Neo::Utils::BINARY)
+        serialize data
+        data.io.string.force_encoding Encoding.find('ASCII-8BIT')
       end
 
       def packet
