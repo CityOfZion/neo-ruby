@@ -3,13 +3,14 @@ require 'openssl'
 module Neo
   # Represents a Neo private/public key pair
   class Key
-    ADDRESS_VERSION = '17'.freeze
+    DEFAULT_ADDRESS_VERSION = '17'.freeze
     PUSHBYTES33 = '21'.freeze
     CHECKSIG = 'ac'.freeze
     WIF_PREFIX = '80'.freeze # MainNet
     WIF_SUFFIX = '01'.freeze # Compressed
 
-    def initialize
+    def initialize(address_version = DEFAULT_ADDRESS_VERSION)
+      @address_version = address_version
       @key = OpenSSL::PKey::EC.new('prime256v1').generate_key
     end
 
@@ -32,7 +33,7 @@ module Neo
     end
 
     def address
-      Key.script_hash_to_address(script_hash)
+      Key.script_hash_to_address(script_hash, @address_version)
     end
 
     def wif
@@ -40,8 +41,8 @@ module Neo
     end
 
     class << self
-      def script_hash_to_address(script_hash)
-        Utils::Base58.encode(with_checksum(ADDRESS_VERSION + script_hash).to_i(16))
+      def script_hash_to_address(script_hash, address_version = DEFAULT_ADDRESS_VERSION)
+        Utils::Base58.encode(with_checksum(address_version + script_hash).to_i(16))
       end
 
       def private_key_to_wif(private_key)
