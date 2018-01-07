@@ -1,3 +1,6 @@
+require 'neo/transaction/input'
+require 'neo/transaction/output'
+
 module Neo
   # Represent a transaction on the Neo blockchain
   class Transaction
@@ -16,7 +19,7 @@ module Neo
     end
 
     def read(data)
-      @type = case data.read_uint8
+      @type = case data.read_byte
               when 0x00 then :miner_transaction
               when 0x01 then :issue_transaction
               when 0x02 then :claim_transaction
@@ -28,7 +31,7 @@ module Neo
               when 0xd0 then :publish_transaction
               when 0xd1 then :invocation_transaction
               end
-      @version = data.read_uint8
+      @version = data.read_byte
       read_exclusive_data(data)
       read_attributes(data)
       read_inputs(data)
@@ -90,6 +93,8 @@ module Neo
         case usage
         when 0x00, 0x02, 0x03, 0x30, 0xa1..0xaf
           @attributes << { usage: usage, data: data.read_hex(32) }
+        when 0x20
+          @attributes << { usage: usage, data: data.read_hex(20) }
         else
           # TODO: Parse into plain string?
           @attributes << { usage: usage, data: data.read_hex }
@@ -97,26 +102,24 @@ module Neo
       end
     end
 
-    # TODO: Refactor hash to input model
     def read_inputs(data)
       count = data.read_vint
       count.times do
-        @inputs << {
-          previous_hash: data.read_hex(32),
-          previous_index: data.read_uint16
-        }
+        input = Transaction::Input.new
+        input.previous_hash = data.read_hex 32
+        input.previous_index = data.read_uint16
+        @inputs << input
       end
     end
 
-    # TODO: Refactor hash to output model
     def read_outputs(data)
       count = data.read_vint
       count.times do
-        @outputs << {
-          asset_id: data.read_hex(32),
-          value: data.read_uint64,
-          script_hash: data.read_hex(20)
-        }
+        output = Transaction::Output.new
+        output.asset_id = data.read_hex 32
+        output.value = data.read_uint64
+        output.script_hash = data.read_hex 20
+        @outputs << output
       end
     end
 
@@ -131,6 +134,19 @@ module Neo
       def read(data)
         tx = Transaction.new
         tx.read(data)
+      end
+
+      def mempool
+        RemoteNode.mempool
+      end
+
+      # Returns the corresponding transaction information based on the specified hash value
+      #
+      # @param txid [String] Transaction ID
+      # @return [Neo::Transaction]
+      def get(txid)
+        data = RemoteNode.rpc 'getrawtransaction', txid
+        read Utils::DataReader.new(data, true)
       end
     end
   end

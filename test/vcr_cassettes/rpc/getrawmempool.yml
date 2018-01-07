@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://seed2.neo.org:10332/?id=1&jsonrpc=2.0&method=getrawmempool&params=%5B%5D
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - seed2.neo.org:10332
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 07 Jan 2018 22:11:34 GMT
+      Content-Type:
+      - application/json-rpc
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - GET, POST
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '31536000'
+    body:
+      encoding: UTF-8
+      string: '{"jsonrpc":"2.0","id":1,"result":["0x6a493b8ccd8fd88126d833d93b0e5b560c21b1ef91270e641f20bac17717c78d","0x2d5e4176ccf224cc3c7a9b03ea7418662704f2c34fb6ad10be5085a18e389009","0x4e07ca3bdd91cae9815904d8ad5e13749d9adf52ef5ba92e7b5de2c5a653a7a1","0xfdd730218d96b7a920ffac61796dd9395d33203c2d1cb2a9ecb15bdb0b191c0b","0xa705e48ab47817409028d89bf5727399333cdefe60d879ac5b70df38f3096436","0x0f2db24bf1fd93c4da75d390fc5733fdc5a8e9c04a966a30bc9195a4448519e0","0x54ce2fb98f266ad03926d8cfc86c7b43fe10b4914ffae904d49eea96bb8eecd5","0xe8b609be163313d02cd5d7b58c11fd94e2121eedd91ba60a538b580977e829e3","0x0b87932d7e892e9959760407316c07676991959f4912a35b83f136c204b1e0f9","0x035f2e426006ae7dacadb0a02db7ab984fb26fdd3fa232bb1148570da4b432cc","0x61eb7e3ae7a8f1e32d85a191231b600158e56a3f884850e1df295fd4a9baba49","0xbb703111cbc52c4f9d2c7ad772cf6ff18b929b93d09e1b8d0729cea154925625","0x779e48fdf4267274213a9d9fc5cad0b820f70f8b89bc6d5965298a9148bbe8e4","0x88d813dccf3482d310240d2c25e5aad8cd0fd461960e22606996904ff5b5a0f7","0xfeb5df60eb3c7ff58ed41a1ae8fe890bda5f241c467d65266bbdd1bb8d24a697","0xa87ebadb402e1a7a1a43d0df79f0a8a5b19237939d03060edd96176b4738f6e1","0xc2432162f0f306e8b9242f828511723e6706db461735694cb9b70b9cc6bb908a","0xabf1e21b624be85d31f5f36ac61b69d55d15950f69b1729708b1ae01a5c9e0aa","0xc39b354e20c3d34d69f20be81dd91b7092d72458303d015dc80b7c0b66a4f719","0x34da8c88e51628a0a19b7d08c9554c87695d5c681334a2590e4596c0f812e32e","0x10af83ab913513738d633636c6030593f3504fc46c138f6b432e1cd856a5aba2"]}'
+    http_version: 
+  recorded_at: Sun, 07 Jan 2018 22:11:35 GMT
+recorded_with: VCR 4.0.0

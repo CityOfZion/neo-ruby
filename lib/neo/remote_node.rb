@@ -33,6 +33,11 @@ module Neo
       rpc 'getpeers'
     end
 
+    # Get a list of unconfirmed transactions in memory
+    def mempool
+      rpc 'getrawmempool'
+    end
+
     # Make a call to the node's JSON-RPC interface
     #
     # @param method [String] The RPC method name to call
@@ -49,6 +54,11 @@ module Neo
     class << self
       def random
         new Neo.config.rpc_nodes.to_a.sample
+      end
+
+      # Select a random node and get the mem pool
+      def mempool
+        random.mempool
       end
 
       def rpc(method, *params)

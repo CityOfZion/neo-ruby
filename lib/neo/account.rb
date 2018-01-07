@@ -21,6 +21,15 @@ module Neo
           account.send("#{k}=", v)
         end
       end
+
+      # Verify that the address is a correct NEO address
+      #
+      # @param address [String] Address to validate
+      # @return [Boolean]
+      def validate(address)
+        response = RemoteNode.rpc 'validateaddress', address
+        response['isvalid']
+      end
     end
   end
 end

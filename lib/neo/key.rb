@@ -45,6 +45,11 @@ module Neo
         Utils::Base58.encode(with_checksum(address_version + script_hash).to_i(16))
       end
 
+      # TODO: verify checksum
+      def address_to_script_hash(address)
+        Neo::Utils::Base58.decode(address).to_s(16)[2...42]
+      end
+
       def private_key_to_wif(private_key)
         Utils::Base58.encode(with_checksum(WIF_PREFIX + private_key + WIF_SUFFIX).to_i(16))
       end

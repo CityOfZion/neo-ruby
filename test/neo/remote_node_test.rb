@@ -24,4 +24,10 @@ describe Neo::RemoteNode do
       @remote_node.peers['unconnected'].wont_be_empty
     end
   end
+
+  it 'can get mempool' do
+    VCR.use_cassette 'rpc/getrawmempool', match_requests_on: [:query] do
+      @remote_node.mempool.wont_be_empty
+    end
+  end
 end

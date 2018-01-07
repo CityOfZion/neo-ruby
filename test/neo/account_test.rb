@@ -12,4 +12,16 @@ describe Neo::Account do
     @account.neo_balance.must_equal 122
     @account.gas_balance.must_equal 2_591.295665
   end
+
+  it 'it can validate an address' do
+    VCR.use_cassette 'rpc/validateaddress_valid', match_requests_on: [:query] do
+      assert Neo::Account.validate('AZzDawx6i7XDnjuFtH3rqaqs9dRApmTqu1')
+    end
+  end
+
+  it 'it can invalidate an address' do
+    VCR.use_cassette 'rpc/validateaddress_invalid', match_requests_on: [:query] do
+      refute Neo::Account.validate('lolwut')
+    end
+  end
 end
