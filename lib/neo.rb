@@ -1,3 +1,4 @@
+require 'neo/account'
 require 'neo/asset'
 require 'neo/block'
 require 'neo/configuration'

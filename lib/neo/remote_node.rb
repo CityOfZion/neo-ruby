@@ -2,11 +2,13 @@ require 'net/http'
 require 'json'
 
 module Neo
+  # Represents a remote node on the Neo network. Primarily used for RPC function calls.
   class RemoteNode
     attr_reader :url, :port, :nonce, :user_agent
 
     def initialize(url)
       @url = url
+      @useragent = nil
     end
 
     # Get version information of this node
@@ -14,9 +16,9 @@ module Neo
     def version
       unless @useragent
         data = rpc 'getversion'
-        @port = data["port"]
-        @nonce = data["nonce"]
-        @user_agent = data["useragent"]
+        @port = data['port']
+        @nonce = data['nonce']
+        @user_agent = data['useragent']
       end
       @user_agent
     end
@@ -45,7 +47,6 @@ module Neo
     end
 
     class << self
-
       def random
         new Neo.config.rpc_nodes.to_a.sample
       end
