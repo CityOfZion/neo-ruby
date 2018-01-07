@@ -43,14 +43,14 @@ module Neo
       #
       # @return [Numeric]
       def height
-        Neo.rpc 'getblockcount'
+        RemoteNode.rpc 'getblockcount'
       end
 
       # Returns the hash of the tallest block in the main chain.
       #
       # @return [String]
       def best_hash
-        Neo.rpc 'getbestblockhash'
+        RemoteNode.rpc 'getbestblockhash'
       end
 
       # Returns the corresponding block information according to the specified hash or index
@@ -58,7 +58,7 @@ module Neo
       # @param identifier [Integer, String] hash value or index of block to get
       # @return [Neo::Block]
       def get(identifier)
-        data = Neo.rpc 'getblock', identifier
+        data = RemoteNode.rpc 'getblock', identifier
         Block.new data
       end
     end
