@@ -1,13 +1,13 @@
 ## RPC Functions
 
-* [ ] getaccountstate <address> - Check account asset information according to account address
+* [x] getaccountstate <address> - Check account asset information according to account address
 * [x] getassetstate <asset_id> - Query asset information according to the specified asset number
 * [x] getbestblockhash - Gets the hash of the tallest block in the main chain
 * [x] getblock <hash> [verbose=0] - Returns the corresponding block information according to the specified hash value
 * [x] getblock <index> [verbose=0] - Returns the corresponding block information according to the specified index
 * [x] getblockcount - Gets the number of blocks in the main chain
 * [x] getblockhash <index> - Returns the hash value of the corresponding block based on the specified index
-* [ ] getblocksysfee <index> - Returns the system fees before the block according to the specified index
+* [x] getblocksysfee <index> - Returns the system fees before the block according to the specified index
 * [x] getconnectioncount - Gets the current number of connections for the node
 * [ ] getcontractstate <script_hash> - Returns information about the contract based on the specified script hash
 * [ ] getrawmempool - Get a list of unconfirmed transactions in memory

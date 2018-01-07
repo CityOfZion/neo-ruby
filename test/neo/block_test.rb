@@ -33,6 +33,12 @@ describe Neo::Block do
     end
   end
 
+  it 'can get a block sys fee by index' do
+    VCR.use_cassette 'rpc/getblocksysfee', match_requests_on: [:query] do
+      Neo::Block.sys_fee(2134).must_equal 10
+    end
+  end
+
   describe 'parser' do
     before do
       VCR.use_cassette 'rpc/getblock_by_hash', match_requests_on: [:query] do

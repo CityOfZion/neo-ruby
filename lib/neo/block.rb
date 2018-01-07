@@ -64,10 +64,18 @@ module Neo
 
       # Returns the hash value of the corresponding block based on the specified index
       #
-      # @param index [Integer] index of block to get
+      # @param index [Integer] index of block
       # @return [String]
       def hash(index)
         RemoteNode.rpc 'getblockhash', index
+      end
+
+      # Returns the system fees before the block according to the specified index
+      #
+      # @param index [Integer] index of block
+      # @return [Integer]
+      def sys_fee(index)
+        RemoteNode.rpc('getblocksysfee', index).to_i
       end
     end
   end
