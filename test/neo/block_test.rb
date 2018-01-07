@@ -27,6 +27,12 @@ describe Neo::Block do
     end
   end
 
+  it 'can get a block hash by index' do
+    VCR.use_cassette 'rpc/getblockhash', match_requests_on: [:query] do
+      Neo::Block.hash(42).must_equal '0x6e0b6bad6dc34ef335c829c0864f57750796a17603ccab8e296d8345c8c469f0'
+    end
+  end
+
   describe 'parser' do
     before do
       VCR.use_cassette 'rpc/getblock_by_hash', match_requests_on: [:query] do

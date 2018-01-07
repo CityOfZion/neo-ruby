@@ -61,6 +61,14 @@ module Neo
         data = RemoteNode.rpc 'getblock', identifier
         Block.new data
       end
+
+      # Returns the hash value of the corresponding block based on the specified index
+      #
+      # @param index [Integer] index of block to get
+      # @return [String]
+      def hash(index)
+        RemoteNode.rpc 'getblockhash', index
+      end
     end
   end
 end

@@ -3,10 +3,32 @@ require 'json'
 
 module Neo
   class RemoteNode
-    attr_reader :url
+    attr_reader :url, :port, :nonce, :user_agent
 
     def initialize(url)
       @url = url
+    end
+
+    # Get version information of this node
+    # TODO: Probably refactor this.
+    def version
+      unless @useragent
+        data = rpc 'getversion'
+        @port = data["port"]
+        @nonce = data["nonce"]
+        @user_agent = data["useragent"]
+      end
+      @user_agent
+    end
+
+    # Gets the current number of connections for the node
+    def connection_count
+      rpc 'getconnectioncount'
+    end
+
+    # Get a list of nodes that are currently connected/disconnected by this node
+    def peers
+      rpc 'getpeers'
     end
 
     # Make a call to the node's JSON-RPC interface

@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://seed3.neo.org:20332/?id=1&jsonrpc=2.0&method=getassetstate&params=%5B%22c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b%22%5D
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - seed3.neo.org:20332
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 07 Jan 2018 17:27:04 GMT
+      Content-Type:
+      - application/json-rpc
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - GET, POST
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '31536000'
+    body:
+      encoding: UTF-8
+      string: '{"jsonrpc":"2.0","id":1,"result":{"version":0,"id":"0xc56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b","type":"GoverningToken","name":[{"lang":"zh-CN","name":"\u5C0F\u8681\u80A1"},{"lang":"en","name":"AntShare"}],"amount":"100000000","available":"100000000","precision":0,"owner":"00","admin":"Abf2qMs1pzQb8kYk9RuxtUb9jtRKJVuBJt","issuer":"Abf2qMs1pzQb8kYk9RuxtUb9jtRKJVuBJt","expiration":4000000,"frozen":false}}'
+    http_version: 
+  recorded_at: Sun, 07 Jan 2018 17:27:06 GMT
+recorded_with: VCR 4.0.0

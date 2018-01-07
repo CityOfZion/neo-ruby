@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://seed2.neo.org:20332/?id=1&jsonrpc=2.0&method=getblockhash&params=%5B42%5D
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - seed2.neo.org:20332
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 07 Jan 2018 17:30:35 GMT
+      Content-Type:
+      - application/json-rpc
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - GET, POST
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '31536000'
+    body:
+      encoding: UTF-8
+      string: '{"jsonrpc":"2.0","id":1,"result":"0x6e0b6bad6dc34ef335c829c0864f57750796a17603ccab8e296d8345c8c469f0"}'
+    http_version: 
+  recorded_at: Sun, 07 Jan 2018 17:30:37 GMT
+recorded_with: VCR 4.0.0
