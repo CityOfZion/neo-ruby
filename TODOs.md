@@ -9,7 +9,7 @@
 * [x] getblockhash <index> - Returns the hash value of the corresponding block based on the specified index
 * [x] getblocksysfee <index> - Returns the system fees before the block according to the specified index
 * [x] getconnectioncount - Gets the current number of connections for the node
-* [ ] getcontractstate <script_hash> - Returns information about the contract based on the specified script hash
+* [x] getcontractstate <script_hash> - Returns information about the contract based on the specified script hash
 * [x] getrawmempool - Get a list of unconfirmed transactions in memory
 * [x] getrawtransaction <txid> [verbose=0] - Returns the corresponding transaction information based on the specified hash value
 * [ ] getstorage <script_hash> <key> - Returns the stored value based on the contract script hash and key
