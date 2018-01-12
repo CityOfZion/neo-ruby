@@ -16,13 +16,17 @@ module Neo
 
     # Construct a new block from given data
     # @param data [Hash] Ruby hash of parsed JSON format block data
-    def initialize(data = nil)
-      @data = Utils::DataReader.new(data)
+    def initialize
       @transactions = []
-      parse_header
     end
 
-    def parse_header
+    def read(data)
+      parse_header data
+      parse_body data
+      self
+    end
+
+    def parse_header(data)
       @version = data.read_uint32
       @previous_block_hash = data.read_hex 32, true
       @merkle_root = data.read_hex 32, true
@@ -30,6 +34,9 @@ module Neo
       @height = data.read_uint32
       @nonce = data.read_hex 8, true
       @next_consensus = Key.script_hash_to_address data.read_hex(20)
+    end
+
+    def parse_body(data)
       data.read_byte
       @script = Script.read data
       transaction_count = data.read_vint
@@ -38,7 +45,53 @@ module Neo
       end
     end
 
+    def serialize_header(data)
+      data.write_uint32 @version
+      data.write_hex @previous_block_hash, true, true
+      data.write_hex @merkle_root, true, true
+      data.write_uint32 @time_stamp
+      data.write_uint32 @height
+      data.write_hex @nonce, true, true
+      data.write_hex Key.address_to_script_hash(@next_consensus), true
+    end
+
+    # TODO: This.
+    def serialize_body(data)
+      data.write_byte 1
+      # @script.serialize(data)
+      data.write_vint @transactions.size
+      @transactions.each do |tx|
+        # tx.serialize(data)
+      end
+    end
+
+    def serialize(data)
+      serialize_header data
+      serialize_body data
+    end
+
+    # Hash the contents of this block
+    #
+    # @return [String]
+    def block_hash
+      data = Utils::DataWriter.new
+      serialize_header data
+      hash1 = Digest::SHA256.digest(data.io.string)
+      hash2 = Digest::SHA256.hexdigest(hash1)
+      Utils.reverse_hex_string(hash2)
+    end
+
     class << self
+
+      # Parse a block from raw data
+      #
+      # @param data [Utils::DataReader] binary data to parse
+      # @return [Neo::Block]
+      def read(data)
+        block = Block.new
+        block.read(data)
+      end
+
       # Gets the number of blocks in the main chain.
       #
       # @return [Numeric]
@@ -59,7 +112,7 @@ module Neo
       # @return [Neo::Block]
       def get(identifier)
         data = RemoteNode.rpc 'getblock', identifier
-        Block.new data
+        Block.read Utils::DataReader.new(data)
       end
 
       # Returns the hash value of the corresponding block based on the specified index

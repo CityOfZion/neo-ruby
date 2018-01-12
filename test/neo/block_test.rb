@@ -16,14 +16,14 @@ describe Neo::Block do
   it 'can get a block by index' do
     VCR.use_cassette 'rpc/getblock_by_index', match_requests_on: [:query] do
       block = Neo::Block.get 42
-      block.data.wont_be_nil
+      block.height.must_equal 42
     end
   end
 
   it 'can get a block by hash' do
     VCR.use_cassette 'rpc/getblock_by_hash', match_requests_on: [:query] do
       block = Neo::Block.get 'fb70a04f58cf18ed025377e85dab7c21ba97e5b5c07e05fbb7d3d81d40216a40'
-      block.data.wont_be_nil
+      block.height.must_equal 899727
     end
   end
 
@@ -36,6 +36,14 @@ describe Neo::Block do
   it 'can get a block sys fee by index' do
     VCR.use_cassette 'rpc/getblocksysfee', match_requests_on: [:query] do
       Neo::Block.sys_fee(2134).must_equal 10
+    end
+  end
+
+  it 'can hash itself' do
+    hash = 'fb70a04f58cf18ed025377e85dab7c21ba97e5b5c07e05fbb7d3d81d40216a40'
+    VCR.use_cassette 'rpc/getblock_by_hash', match_requests_on: [:query] do
+      block = Neo::Block.get hash
+      block.block_hash.must_equal hash
     end
   end
 
