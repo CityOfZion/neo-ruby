@@ -3,21 +3,30 @@ module Neo
     module Handler
       def handle_version(payload)
         version = VersionPayload.read payload
-        send_packet VersionPayload.new(@port, @local_node.node_id, version.start_height)
+        send_packet VerackPayload.new
       end
 
       def handle_verack(_payload)
-        send_packet VerackPayload.new
         @callbacks[:connected].each(&:call)
       end
 
       def handle_inv(payload)
         inv = InvPayload.read payload
-        puts inv.inspect
+        case inv.type
+        when :block
+          hashes = Set.new inv.hashes
+          unknown_hashes = hashes - @local_node.known_hashes
+          unless unknown_hashes.length.zero?
+            enqueue_message InvPayload.new(:block, unknown_hashes, 'getdata')
+          end
+        else
+          puts inv.inspect
+        end
       end
 
       def handle_block(payload)
-        @callbacks[:block].each { |c| c.call payload }
+        block_payload = BlockPayload.read payload
+        @callbacks[:block].each { |c| c.call block_payload.block }
       end
 
       def respond_to_missing?(method_name, include_private = false)

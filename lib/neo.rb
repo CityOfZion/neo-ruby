@@ -1,3 +1,5 @@
+require 'set'
+
 require 'neo/account'
 require 'neo/asset'
 require 'neo/block'

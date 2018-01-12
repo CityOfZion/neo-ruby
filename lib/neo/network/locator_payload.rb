@@ -5,16 +5,16 @@ module Neo
 
       def initialize(hashes = [], stop = nil, command = 'getblocks')
         @hashes = hashes
-        @stop = stop
+        @stop = stop || '00' * 32
         @command = command
       end
 
       def deserialize(data)
         count = data.read_vint
         count.times do
-          @hashes << data.read_hex(32)
+          @hashes << data.read_hex(32, true)
         end
-        @stop = data.read_hex 32
+        @stop = data.read_hex 32, true
       end
 
       def serialize(data)
@@ -22,7 +22,7 @@ module Neo
         hashes.each do |hash|
           data.write_hex hash, true, true
         end
-        data.write_hex stop, true, true if stop
+        data.write_hex stop, true, true
       end
     end
   end

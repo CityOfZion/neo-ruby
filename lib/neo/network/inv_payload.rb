@@ -7,19 +7,19 @@ module Neo
         0xe0 => :consensus
       }.freeze
 
-      attr_accessor :hashes, :stop
+      attr_accessor :type, :hashes
 
-      def initialize(type = nil, hashes = [])
+      def initialize(type = nil, hashes = [], command = 'inv')
         @type = type
-        @hashes = hashes
-        @command = 'inv'
+        @hashes = Array(hashes)
+        @command = command
       end
 
       def deserialize(data)
         @type = TYPES[data.read_byte]
         count = data.read_vint
         count.times do
-          @hashes << data.read_hex(32)
+          @hashes << data.read_hex(32, true)
         end
       end
 

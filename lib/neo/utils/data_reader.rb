@@ -2,6 +2,8 @@ module Neo
   module Utils
     # Utility class for reading serialized data
     class DataReader
+      attr_reader :io
+
       def initialize(data, hex = true)
         @io = data_to_readable(data, hex)
       end

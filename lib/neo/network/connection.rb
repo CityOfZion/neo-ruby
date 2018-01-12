@@ -14,26 +14,41 @@ module Neo
           disconnected: [],
           block: []
         }
+        @message_queue = EM::Queue.new
 
         on_connected do
           @local_node.add_connection self
+          EM.add_periodic_timer(1) { process_message_queue }
           EM.add_periodic_timer(20) { request_blocks }
+          EM.next_tick { request_blocks }
         end
 
-        on_block do |_block|
-          log 'block', 'Recieving a block'
-          # TODO: Update @last_hash
+        on_block do |block|
+          @local_node.last_height = block.height
+          @local_node.last_hash = block.block_hash
+
+          log 'block', block.height
         end
+      end
+
+      def process_message_queue
+        @message_queue.pop do |message|
+          send_packet message
+        end
+      end
+
+      def enqueue_message(message)
+        @message_queue.push message
       end
 
       def request_blocks
-        send_packet LocatorPayload.new([@local_node.last_hash])
+        enqueue_message LocatorPayload.new([@local_node.last_hash])
       end
 
       def send_packet(message)
-        log message.command, message.inspect, false
-        data = message.packet
-        log 'raw', data.unpack('H*').first, false
+        # log message.command, message.inspect, false
+        # data = message.packet
+        # log 'raw', data.unpack('H*').first, false
         send_data message.packet
       end
 
@@ -41,20 +56,21 @@ module Neo
         self.class.log(*args)
       end
 
-      # TODO: move to Handler?
       def post_init
         log "Connecting to #{@host} on #{@port}."
+        EM.next_tick {
+          send_packet VersionPayload.new(@port, @local_node.node_id, @local_node.last_height)
+        }
       end
 
-      # TODO: move to Handler?
       def receive_data(data)
-        log 'raw', data.unpack('H*').first
+        # log 'raw', data.unpack('H*').first
         @parser.buffer data
       end
 
-      # TODO: move to Handler?
       def unbind
         log "Disconnected from #{@host}."
+        @local_node.remove_connection self
         Connection.connect_to_random_node @local_node
       end
 
@@ -71,9 +87,9 @@ module Neo
         # TODO: Refactor this crap.
         def log(event, message = nil, inbound = true)
           if message
-            puts "#{inbound ? '<' : '>'} [#{event}] #{message}"
+            puts "#{inbound ? '>>>' : '<<<'} [#{event}] #{message}"
           else
-            event
+            puts event
           end
         end
       end
