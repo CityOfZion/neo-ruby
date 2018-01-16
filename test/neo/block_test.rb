@@ -98,10 +98,10 @@ describe Neo::Block do
       @block.transactions.size.must_equal 4
     end
 
-    it 'finds the transaction type' do
-      @block.transactions[0].type.must_equal :miner_transaction
-      @block.transactions[1].type.must_equal :contract_transaction
-      @block.transactions[3].type.must_equal :claim_transaction
+    it 'initializes the correct transaction subclass' do
+      @block.transactions[0].must_be_instance_of Neo::MinerTransaction
+      @block.transactions[1].must_be_instance_of Neo::ContractTransaction
+      @block.transactions[3].must_be_instance_of Neo::ClaimTransaction
     end
 
     it 'finds the transaction version' do

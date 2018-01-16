@@ -1,5 +1,6 @@
 require 'neo/utils/data_reader'
 require 'neo/utils/data_writer'
+require 'neo/utils/entity'
 
 module Neo
   # Utility module

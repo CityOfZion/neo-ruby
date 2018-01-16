@@ -2,16 +2,14 @@ module Neo
   class Script
     attr_reader :verify, :invoke
 
-    def read(data)
-      @invoke = data.read_hex
-      @verify = data.read_hex
-      self
+    def initialize(invoke = nil, verify = nil)
+      @invoke = invoke
+      @verify = verify
     end
 
     class << self
       def read(io)
-        script = Script.new
-        script.read(io)
+        new(io.read_hex, io.read_hex)
       end
     end
   end
