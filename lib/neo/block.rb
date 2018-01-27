@@ -1,6 +1,10 @@
+require 'neo/utils/entity'
+
 module Neo
   # Represents a block in the Neo blockchain
   class Block
+    include Neo::Utils::Entity
+
     attr_reader :data,
                 :version,
                 :previous_block_hash,
@@ -14,35 +18,9 @@ module Neo
 
     alias consensus_data nonce
 
-    # Construct a new block from given data
-    # @param data [Hash] Ruby hash of parsed JSON format block data
-    def initialize
-      @transactions = []
-    end
-
-    def read(data)
-      parse_header data
-      parse_body data
-      self
-    end
-
-    def parse_header(data)
-      @version = data.read_uint32
-      @previous_block_hash = data.read_hex 32, true
-      @merkle_root = data.read_hex 32, true
-      @time_stamp = data.read_uint32
-      @height = data.read_uint32
-      @nonce = data.read_hex 8, true
-      @next_consensus = Key.script_hash_to_address data.read_hex(20)
-    end
-
-    def parse_body(data)
-      data.read_byte
-      @script = Script.read data
-      transaction_count = data.read_vint
-      transaction_count.times do
-        @transactions << Transaction.read(data)
-      end
+    def initialize(attrs = {})
+      super
+      @transactions = [] if @transactions.nil?
     end
 
     def serialize_header(data)
@@ -88,8 +66,24 @@ module Neo
       # @param data [Utils::DataReader] binary data to parse
       # @return [Neo::Block]
       def read(data)
-        block = Block.new
-        block.read(data)
+        attrs = {
+          version: data.read_uint32,
+          previous_block_hash: data.read_hex(32, true),
+          merkle_root: data.read_hex(32, true),
+          time_stamp: data.read_uint32,
+          height: data.read_uint32,
+          nonce: data.read_hex(8, true),
+          next_consensus: Key.script_hash_to_address(data.read_hex(20)),
+        }
+
+        data.read_byte
+
+        attrs[:script] = Script.read(data)
+        attrs[:transactions] = Array.new(data.read_vint) do
+          Transaction.read(data)
+        end
+
+        Block.new(**attrs)
       end
 
       # Gets the number of blocks in the main chain.

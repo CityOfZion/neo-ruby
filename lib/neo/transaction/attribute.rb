@@ -1,6 +1,10 @@
+require 'neo/utils/entity'
+
 module Neo
   class Transaction
     class Attribute
+      include Neo::Utils::Entity
+
       CONTRACT_HASH = 0x00
       ECDH02 = 0x02
       ECDH03 = 0x03
@@ -14,16 +18,18 @@ module Neo
 
       attr_reader :usage, :data
 
-      def initialize(usage, data)
-        @usage = usage
-
-        case usage
-        when CONTRACT_HASH, ECDH02, ECDH03, VOTE, HASH
-          @data = data.read_hex(32)
-        when SCRIPT
-          @data = data.read_hex(20)
-        else
-          @data = data.read_hex
+      class << self
+        def read(data)
+          attrs = {usage: data.read_uint8}
+          attrs[:data] = case attrs[:usage]
+                         when CONTRACT_HASH, ECDH02, ECDH03, VOTE, HASH
+                           data.read_hex(32)
+                         when SCRIPT
+                           data.read_hex(20)
+                         else
+                           data.read_hex
+                         end
+          new(**attrs)
         end
       end
     end

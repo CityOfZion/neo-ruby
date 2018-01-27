@@ -1,15 +1,14 @@
+require 'neo/utils/entity'
+
 module Neo
   class Script
+    include Neo::Utils::Entity
+
     attr_reader :verify, :invoke
 
-    def initialize(invoke = nil, verify = nil)
-      @invoke = invoke
-      @verify = verify
-    end
-
     class << self
-      def read(io)
-        new(io.read_hex, io.read_hex)
+      def read(data)
+        new(invoke: data.read_hex, verify: data.read_hex)
       end
     end
   end

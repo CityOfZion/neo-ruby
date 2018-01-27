@@ -15,16 +15,15 @@ module Neo
       'TestNet' => 'Antt'
     }.freeze
 
+    attr_accessor :rpc_nodes, :p2p_nodes, :magic_word
+    attr_reader :network
+
     def initialize
       self.rpc_nodes = Set.new
       self.p2p_nodes = Set.new
       self.network = 'TestNet'
       self.magic_word = DEFAULT_MAGIC[network]
     end
-
-    attr_accessor :rpc_nodes, :p2p_nodes, :magic_word
-
-    attr_reader :network
 
     def network=(net)
       @network = net

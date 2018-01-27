@@ -1,18 +1,16 @@
+require 'neo/utils/entity'
+
 module Neo
   class Transaction
     # Represents a transaction output on the Neo blockchain.
     class Output
+      include Neo::Utils::Entity
+
       attr_accessor :asset_id, :script_hash, :index
       attr_writer :value
 
       alias n= index=
       alias asset= asset_id=
-
-      def initialize(asset_id = nil, value = nil, script_hash = nil)
-        self.asset_id = asset_id
-        self.value = value
-        self.script_hash = script_hash
-      end
 
       def address
         @address || Key.script_hash_to_address(@script_hash)
@@ -35,9 +33,7 @@ module Neo
         # @return [Neo::Transaction::Output]
         def get(txid, index)
           data = RemoteNode.rpc 'gettxout', txid, index
-          data.each_with_object(Output.new) do |(k, v), output|
-            output.send("#{k}=", v)
-          end
+          new(**(data.each_with_object({}) { |(k,v), h| h[k.to_sym] = v }))
         end
       end
     end

@@ -1,6 +1,10 @@
+require 'neo/utils/entity'
+
 module Neo
   # Represents an account on the Neo Blockchain
   class Account
+    include Neo::Utils::Entity
+
     attr_accessor :version, :script_hash, :frozen, :votes, :balances
 
     def neo_balance
@@ -17,9 +21,7 @@ module Neo
 
       def get(address)
         data = RemoteNode.rpc 'getaccountstate', address
-        data.each_with_object(Account.new) do |(k, v), account|
-          account.send("#{k}=", v)
-        end
+        new(**(data.each_with_object({}) { |(k,v), h| h[k.to_sym] = v }))
       end
 
       # Verify that the address is a correct NEO address

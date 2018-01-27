@@ -1,6 +1,10 @@
+require 'neo/utils/entity'
+
 module Neo
   # Represent a smart contract on the Neo blockchain
   class Contract
+    include Neo::Utils::Entity
+
     attr_accessor :version,
                   :hash,
                   :script,
@@ -18,9 +22,7 @@ module Neo
     class << self
       def get(script_hash)
         data = RemoteNode.rpc 'getcontractstate', script_hash
-        contract = Contract.new
-        data.each { |k, v| contract.send "#{k}=", v }
-        contract
+        new(**(data.each_with_object({}) { |(k,v), h| h[k.to_sym] = v }))
       end
 
       def storage(script_hash, key)

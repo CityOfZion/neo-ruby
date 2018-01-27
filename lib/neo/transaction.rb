@@ -41,23 +41,24 @@ module Neo
       end
 
       def read_attributes(data)
-        Array.new(data.read_vint) do
-          Transaction::Attribute.new(data.read_uint8, data)
-        end
+        Array.new(data.read_vint) { Transaction::Attribute.read data }
       end
 
       def read_inputs(data)
         Array.new(data.read_vint) do
-          Transaction::Input.new(data.read_hex(32), data.read_uint16)
+          Transaction::Input.new(
+            previous_hash: data.read_hex(32),
+            previous_index: data.read_uint16
+          )
         end
       end
 
       def read_outputs(data)
         Array.new(data.read_vint) do
           Transaction::Output.new(
-            data.read_hex(32),
-            data.read_uint64,
-            data.read_hex(20)
+            asset_id: data.read_hex(32),
+            value: data.read_uint64,
+            script_hash: data.read_hex(20)
           )
         end
       end
