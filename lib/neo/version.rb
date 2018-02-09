@@ -7,7 +7,6 @@ module Neo
   #   * `minor` [Integer] The minor version.
   #   * `patch` [Integer] The patch version.
   #   * `parts` [Array<Integer>] List of the version parts.
-  # rubocop:disable MethodLength
   def version
     @version ||= begin
       string = '0.0.0'
