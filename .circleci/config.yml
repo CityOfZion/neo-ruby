@@ -23,6 +23,9 @@ jobs:
       - run:
           name: run tests
           command: bundle exec rake
+      - type: shell
+        command: |
+          bundle exec rubocop --extra-details --display-cop-names --parallel
       - store_test_results:
           path: ./test/reports
       - store_artifacts:

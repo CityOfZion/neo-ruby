@@ -21,11 +21,12 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'eventmachine', '~> 1.2'
 
-  spec.add_development_dependency 'bundler', '~> 1.16.a'
+  spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'minitest', '~> 5.0'
-  spec.add_development_dependency 'minitest-autotest'
-  spec.add_development_dependency 'minitest-ci'
+  spec.add_development_dependency 'minitest-autotest', '~> 1.0'
+  spec.add_development_dependency 'minitest-ci', '~> 3.4'
   spec.add_development_dependency 'rake', '~> 12.0'
+  spec.add_development_dependency 'rubocop', '~> 0.52.0'
   spec.add_development_dependency 'vcr', '~> 4.0'
   spec.add_development_dependency 'webmock', '~> 3.1'
 end
