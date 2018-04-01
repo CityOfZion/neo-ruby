@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2018-04-02T16:38:57-04:00">2018-04-02T16:38:57-04:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2018-04-02T16:49:16-04:00">2018-04-02T16:49:16-04:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,7 +25,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         341.86
+         371.93
        </span>
     </span> hits/line)
   </h2>
@@ -97,7 +97,7 @@
         <td>54</td>
         <td>51</td>
         <td>3</td>
-        <td>2428.7</td>
+        <td>2576.2</td>
       </tr>
       
       <tr>
@@ -217,7 +217,7 @@
         <td>70</td>
         <td>68</td>
         <td>2</td>
-        <td>990.5</td>
+        <td>1022.9</td>
       </tr>
       
       <tr>
@@ -387,7 +387,7 @@
         <td>26</td>
         <td>26</td>
         <td>0</td>
-        <td>5124.5</td>
+        <td>5576.8</td>
       </tr>
       
       <tr>
@@ -397,7 +397,7 @@
         <td>47</td>
         <td>44</td>
         <td>3</td>
-        <td>3552.9</td>
+        <td>3979.5</td>
       </tr>
       
       <tr>
@@ -407,7 +407,7 @@
         <td>25</td>
         <td>25</td>
         <td>0</td>
-        <td>675.5</td>
+        <td>789.7</td>
       </tr>
       
       <tr>
@@ -427,7 +427,7 @@
         <td>10</td>
         <td>10</td>
         <td>0</td>
-        <td>2200.1</td>
+        <td>2419.7</td>
       </tr>
       
       <tr>
@@ -437,7 +437,7 @@
         <td>349</td>
         <td>227</td>
         <td>122</td>
-        <td>97.9</td>
+        <td>111.6</td>
       </tr>
       
       <tr>
@@ -447,7 +447,7 @@
         <td>24</td>
         <td>24</td>
         <td>0</td>
-        <td>3812.0</td>
+        <td>4299.4</td>
       </tr>
       
       <tr>
@@ -2108,20 +2108,20 @@
           <code class="ruby">    def initialize(data = [])</code>
         </li>
       
-        <li class="covered" data-hits="1448" data-linenumber="9">
-          <span class="hits">1448</span>
+        <li class="covered" data-hits="1520" data-linenumber="9">
+          <span class="hits">1520</span>
           
           <code class="ruby">      @data = +&#39;&#39;.encode(Encoding::ASCII_8BIT)</code>
         </li>
       
-        <li class="covered" data-hits="1448" data-linenumber="10">
-          <span class="hits">1448</span>
+        <li class="covered" data-hits="1520" data-linenumber="10">
+          <span class="hits">1520</span>
           
           <code class="ruby">      bytes = data.is_a?(String) ? data.unpack(&#39;C*&#39;) : data</code>
         </li>
       
-        <li class="covered" data-hits="23583" data-linenumber="11">
-          <span class="hits">23583</span>
+        <li class="covered" data-hits="23795" data-linenumber="11">
+          <span class="hits">23795</span>
           
           <code class="ruby">      bytes.each { |datum| self &lt;&lt; datum }</code>
         </li>
@@ -2144,8 +2144,8 @@
           <code class="ruby">    def bytes</code>
         </li>
       
-        <li class="covered" data-hits="26724" data-linenumber="15">
-          <span class="hits">26724</span>
+        <li class="covered" data-hits="28992" data-linenumber="15">
+          <span class="hits">28992</span>
           
           <code class="ruby">      data.bytes</code>
         </li>
@@ -2168,8 +2168,8 @@
           <code class="ruby">    def length</code>
         </li>
       
-        <li class="covered" data-hits="26123" data-linenumber="19">
-          <span class="hits">26123</span>
+        <li class="covered" data-hits="28391" data-linenumber="19">
+          <span class="hits">28391</span>
           
           <code class="ruby">      bytes.length</code>
         </li>
@@ -2192,8 +2192,8 @@
           <code class="ruby">    def [](index)</code>
         </li>
       
-        <li class="covered" data-hits="26921" data-linenumber="23">
-          <span class="hits">26921</span>
+        <li class="covered" data-hits="29258" data-linenumber="23">
+          <span class="hits">29258</span>
           
           <code class="ruby">      data.bytes[index]</code>
         </li>
@@ -2240,8 +2240,8 @@
           <code class="ruby">    def &lt;&lt;(byte)</code>
         </li>
       
-        <li class="covered" data-hits="22135" data-linenumber="31">
-          <span class="hits">22135</span>
+        <li class="covered" data-hits="22275" data-linenumber="31">
+          <span class="hits">22275</span>
           
           <code class="ruby">      data &lt;&lt; byte</code>
         </li>
@@ -2384,14 +2384,14 @@
           <code class="ruby">    def to_hex_string(prefix: false)</code>
         </li>
       
-        <li class="covered" data-hits="265" data-linenumber="55">
-          <span class="hits">265</span>
+        <li class="covered" data-hits="440" data-linenumber="55">
+          <span class="hits">440</span>
           
           <code class="ruby">      hex = data.unpack(&#39;H*&#39;).first</code>
         </li>
       
-        <li class="covered" data-hits="265" data-linenumber="56">
-          <span class="hits">265</span>
+        <li class="covered" data-hits="440" data-linenumber="56">
+          <span class="hits">440</span>
           
           <code class="ruby">      prefix ? &#39;0x&#39; + hex : hex</code>
         </li>
@@ -2414,8 +2414,8 @@
           <code class="ruby">    def to_int16</code>
         </li>
       
-        <li class="covered" data-hits="528" data-linenumber="60">
-          <span class="hits">528</span>
+        <li class="covered" data-hits="600" data-linenumber="60">
+          <span class="hits">600</span>
           
           <code class="ruby">      data.unpack(&#39;s&#39;).first</code>
         </li>
@@ -2510,8 +2510,8 @@
           <code class="ruby">    def to_integer</code>
         </li>
       
-        <li class="covered" data-hits="185" data-linenumber="76">
-          <span class="hits">185</span>
+        <li class="covered" data-hits="360" data-linenumber="76">
+          <span class="hits">360</span>
           
           <code class="ruby">      to_hex_string.scan(/../).reverse.join.hex</code>
         </li>
@@ -4497,14 +4497,14 @@
           <code class="ruby">        case data</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="28">
-          <span class="hits">6</span>
+        <li class="covered" data-hits="9" data-linenumber="28">
+          <span class="hits">9</span>
           
           <code class="ruby">        when true      then emit :PUSHT</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="29">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="8" data-linenumber="29">
+          <span class="hits">8</span>
           
           <code class="ruby">        when false     then emit :PUSHF</code>
         </li>
@@ -7855,8 +7855,8 @@
           <code class="ruby">          data.bytes.each do |byte|</code>
         </li>
       
-        <li class="covered" data-hits="4080" data-linenumber="31">
-          <span class="hits">4080</span>
+        <li class="covered" data-hits="4078" data-linenumber="31">
+          <span class="hits">4078</span>
           
           <code class="ruby">            @bytes &lt;&lt; byte</code>
         </li>
@@ -8192,8 +8192,8 @@
           <code class="ruby">      def length</code>
         </li>
       
-        <li class="covered" data-hits="26025" data-linenumber="29">
-          <span class="hits">26025</span>
+        <li class="covered" data-hits="28293" data-linenumber="29">
+          <span class="hits">28293</span>
           
           <code class="ruby">        bytes.length</code>
         </li>
@@ -13723,20 +13723,20 @@
           <code class="ruby">      def read_byte</code>
         </li>
       
-        <li class="covered" data-hits="26919" data-linenumber="21">
-          <span class="hits">26919</span>
+        <li class="covered" data-hits="29256" data-linenumber="21">
+          <span class="hits">29256</span>
           
           <code class="ruby">        byte = script.bytes[@instruction_pointer]</code>
         </li>
       
-        <li class="covered" data-hits="26919" data-linenumber="22">
-          <span class="hits">26919</span>
+        <li class="covered" data-hits="29256" data-linenumber="22">
+          <span class="hits">29256</span>
           
           <code class="ruby">        @instruction_pointer += 1</code>
         </li>
       
-        <li class="covered" data-hits="26919" data-linenumber="23">
-          <span class="hits">26919</span>
+        <li class="covered" data-hits="29256" data-linenumber="23">
+          <span class="hits">29256</span>
           
           <code class="ruby">        byte</code>
         </li>
@@ -13759,20 +13759,20 @@
           <code class="ruby">      def read_bytes(n)</code>
         </li>
       
-        <li class="covered" data-hits="1003" data-linenumber="27">
-          <span class="hits">1003</span>
+        <li class="covered" data-hits="1075" data-linenumber="27">
+          <span class="hits">1075</span>
           
           <code class="ruby">        bytes = []</code>
         </li>
       
-        <li class="covered" data-hits="6112" data-linenumber="28">
-          <span class="hits">6112</span>
+        <li class="covered" data-hits="6325" data-linenumber="28">
+          <span class="hits">6325</span>
           
           <code class="ruby">        n.times { bytes &lt;&lt; read_byte }</code>
         </li>
       
-        <li class="covered" data-hits="1003" data-linenumber="29">
-          <span class="hits">1003</span>
+        <li class="covered" data-hits="1075" data-linenumber="29">
+          <span class="hits">1075</span>
           
           <code class="ruby">        ByteArray.new(bytes)</code>
         </li>
@@ -13795,14 +13795,14 @@
           <code class="ruby">      def next_instruction</code>
         </li>
       
-        <li class="covered" data-hits="21821" data-linenumber="33">
-          <span class="hits">21821</span>
+        <li class="covered" data-hits="24017" data-linenumber="33">
+          <span class="hits">24017</span>
           
           <code class="ruby">        return :RET if @instruction_pointer &gt;= script.length</code>
         </li>
       
-        <li class="covered" data-hits="21743" data-linenumber="34">
-          <span class="hits">21743</span>
+        <li class="covered" data-hits="23939" data-linenumber="34">
+          <span class="hits">23939</span>
           
           <code class="ruby">        VM::OpCode[read_byte]</code>
         </li>
@@ -14042,8 +14042,8 @@
           <code class="ruby">      def current_context</code>
         </li>
       
-        <li class="covered" data-hits="38699" data-linenumber="27">
-          <span class="hits">38699</span>
+        <li class="covered" data-hits="43378" data-linenumber="27">
+          <span class="hits">43378</span>
           
           <code class="ruby">        invocation_stack.peek</code>
         </li>
@@ -14114,8 +14114,8 @@
           <code class="ruby">      def halted?</code>
         </li>
       
-        <li class="covered" data-hits="18219" data-linenumber="39">
-          <span class="hits">18219</span>
+        <li class="covered" data-hits="20415" data-linenumber="39">
+          <span class="hits">20415</span>
           
           <code class="ruby">        @halted</code>
         </li>
@@ -14138,8 +14138,8 @@
           <code class="ruby">      def faulted?</code>
         </li>
       
-        <li class="covered" data-hits="18141" data-linenumber="43">
-          <span class="hits">18141</span>
+        <li class="covered" data-hits="20337" data-linenumber="43">
+          <span class="hits">20337</span>
           
           <code class="ruby">        @faulted</code>
         </li>
@@ -14276,8 +14276,8 @@
           <code class="ruby">      def next_instruction</code>
         </li>
       
-        <li class="covered" data-hits="18141" data-linenumber="66">
-          <span class="hits">18141</span>
+        <li class="covered" data-hits="20337" data-linenumber="66">
+          <span class="hits">20337</span>
           
           <code class="ruby">        current_context.next_instruction</code>
         </li>
@@ -14300,26 +14300,26 @@
           <code class="ruby">      def perform(instruction)</code>
         </li>
       
-        <li class="covered" data-hits="18173" data-linenumber="70">
-          <span class="hits">18173</span>
+        <li class="covered" data-hits="20369" data-linenumber="70">
+          <span class="hits">20369</span>
           
           <code class="ruby">        current_pointer = current_context.instruction_pointer</code>
         </li>
       
-        <li class="covered" data-hits="18173" data-linenumber="71">
-          <span class="hits">18173</span>
+        <li class="covered" data-hits="20369" data-linenumber="71">
+          <span class="hits">20369</span>
           
           <code class="ruby">        send instruction</code>
         </li>
       
-        <li class="covered" data-hits="18173" data-linenumber="72">
-          <span class="hits">18173</span>
+        <li class="covered" data-hits="20369" data-linenumber="72">
+          <span class="hits">20369</span>
           
           <code class="ruby">        print_state current_pointer, instruction if ENV[&#39;DEBUG&#39;]</code>
         </li>
       
-        <li class="covered" data-hits="18173" data-linenumber="73">
-          <span class="hits">18173</span>
+        <li class="covered" data-hits="20369" data-linenumber="73">
+          <span class="hits">20369</span>
           
           <code class="ruby">        halt! if invocation_stack.empty?</code>
         </li>
@@ -14535,14 +14535,14 @@
           <code class="ruby">      def unwrap_array(value)</code>
         </li>
       
-        <li class="covered" data-hits="2560" data-linenumber="10">
-          <span class="hits">2560</span>
+        <li class="covered" data-hits="2895" data-linenumber="10">
+          <span class="hits">2895</span>
           
           <code class="ruby">        case value</code>
         </li>
       
-        <li class="covered" data-hits="2560" data-linenumber="11">
-          <span class="hits">2560</span>
+        <li class="covered" data-hits="2895" data-linenumber="11">
+          <span class="hits">2895</span>
           
           <code class="ruby">        when Array then value</code>
         </li>
@@ -14589,14 +14589,14 @@
           <code class="ruby">      def unwrap_boolean(value)</code>
         </li>
       
-        <li class="covered" data-hits="452" data-linenumber="19">
-          <span class="hits">452</span>
+        <li class="covered" data-hits="523" data-linenumber="19">
+          <span class="hits">523</span>
           
           <code class="ruby">        case value</code>
         </li>
       
-        <li class="covered" data-hits="429" data-linenumber="20">
-          <span class="hits">429</span>
+        <li class="covered" data-hits="500" data-linenumber="20">
+          <span class="hits">500</span>
           
           <code class="ruby">        when TrueClass, FalseClass then value</code>
         </li>
@@ -14715,26 +14715,26 @@
           <code class="ruby">      def unwrap_integer(value)</code>
         </li>
       
-        <li class="covered" data-hits="5372" data-linenumber="40">
-          <span class="hits">5372</span>
+        <li class="covered" data-hits="6394" data-linenumber="40">
+          <span class="hits">6394</span>
           
           <code class="ruby">        case value</code>
         </li>
       
-        <li class="covered" data-hits="5154" data-linenumber="41">
-          <span class="hits">5154</span>
+        <li class="covered" data-hits="5913" data-linenumber="41">
+          <span class="hits">5913</span>
           
           <code class="ruby">        when Integer then value</code>
         </li>
       
-        <li class="covered" data-hits="35" data-linenumber="42">
-          <span class="hits">35</span>
+        <li class="covered" data-hits="123" data-linenumber="42">
+          <span class="hits">123</span>
           
           <code class="ruby">        when TrueClass, FalseClass then value ? 1 : 0</code>
         </li>
       
-        <li class="covered" data-hits="183" data-linenumber="43">
-          <span class="hits">183</span>
+        <li class="covered" data-hits="358" data-linenumber="43">
+          <span class="hits">358</span>
           
           <code class="ruby">        when ByteArray then value.to_integer</code>
         </li>
@@ -17237,8 +17237,8 @@
           <code class="ruby">      def self.[](code)</code>
         </li>
       
-        <li class="covered" data-hits="21743" data-linenumber="19">
-          <span class="hits">21743</span>
+        <li class="covered" data-hits="23939" data-linenumber="19">
+          <span class="hits">23939</span>
           
           <code class="ruby">        @codes.key code</code>
         </li>
@@ -17352,8 +17352,8 @@
           <code class="ruby">        define_method &quot;PUSH#{number}&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="4085" data-linenumber="12">
-          <span class="hits">4085</span>
+        <li class="covered" data-hits="4718" data-linenumber="12">
+          <span class="hits">4718</span>
           
           <code class="ruby">          evaluation_stack.push number</code>
         </li>
@@ -17604,32 +17604,32 @@
           <code class="ruby">      def JMP</code>
         </li>
       
-        <li class="covered" data-hits="524" data-linenumber="54">
-          <span class="hits">524</span>
+        <li class="covered" data-hits="596" data-linenumber="54">
+          <span class="hits">596</span>
           
           <code class="ruby">        offset = current_context.read_bytes(2).to_int16</code>
         </li>
       
-        <li class="covered" data-hits="524" data-linenumber="55">
-          <span class="hits">524</span>
+        <li class="covered" data-hits="596" data-linenumber="55">
+          <span class="hits">596</span>
           
           <code class="ruby">        offset = current_context.instruction_pointer + offset - 3</code>
         </li>
       
-        <li class="covered" data-hits="524" data-linenumber="56">
-          <span class="hits">524</span>
+        <li class="covered" data-hits="596" data-linenumber="56">
+          <span class="hits">596</span>
           
           <code class="ruby">        fault! unless offset.between? 0, current_context.script.length</code>
         </li>
       
-        <li class="covered" data-hits="524" data-linenumber="57">
-          <span class="hits">524</span>
+        <li class="covered" data-hits="596" data-linenumber="57">
+          <span class="hits">596</span>
           
           <code class="ruby">        result = block_given? ? yield : true</code>
         </li>
       
-        <li class="covered" data-hits="524" data-linenumber="58">
-          <span class="hits">524</span>
+        <li class="covered" data-hits="596" data-linenumber="58">
+          <span class="hits">596</span>
           
           <code class="ruby">        current_context.instruction_pointer = offset if result</code>
         </li>
@@ -17652,26 +17652,26 @@
           <code class="ruby">      def JMPIF</code>
         </li>
       
-        <li class="covered" data-hits="393" data-linenumber="62">
-          <span class="hits">393</span>
+        <li class="covered" data-hits="464" data-linenumber="62">
+          <span class="hits">464</span>
           
           <code class="ruby">        JMP do</code>
         </li>
       
-        <li class="covered" data-hits="393" data-linenumber="63">
-          <span class="hits">393</span>
+        <li class="covered" data-hits="464" data-linenumber="63">
+          <span class="hits">464</span>
           
           <code class="ruby">          result = unwrap_boolean evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="393" data-linenumber="64">
-          <span class="hits">393</span>
+        <li class="covered" data-hits="464" data-linenumber="64">
+          <span class="hits">464</span>
           
           <code class="ruby">          result = !result if __callee__ == :JMPIFNOT</code>
         </li>
       
-        <li class="covered" data-hits="393" data-linenumber="65">
-          <span class="hits">393</span>
+        <li class="covered" data-hits="464" data-linenumber="65">
+          <span class="hits">464</span>
           
           <code class="ruby">          result</code>
         </li>
@@ -17904,8 +17904,8 @@
           <code class="ruby">      def TOALTSTACK</code>
         </li>
       
-        <li class="covered" data-hits="2642" data-linenumber="104">
-          <span class="hits">2642</span>
+        <li class="covered" data-hits="2977" data-linenumber="104">
+          <span class="hits">2977</span>
           
           <code class="ruby">        alt_stack.push evaluation_stack.pop</code>
         </li>
@@ -17928,8 +17928,8 @@
           <code class="ruby">      def FROMALTSTACK</code>
         </li>
       
-        <li class="covered" data-hits="2642" data-linenumber="108">
-          <span class="hits">2642</span>
+        <li class="covered" data-hits="2976" data-linenumber="108">
+          <span class="hits">2976</span>
           
           <code class="ruby">        evaluation_stack.push alt_stack.pop</code>
         </li>
@@ -18102,8 +18102,8 @@
           <code class="ruby">      def DROP</code>
         </li>
       
-        <li class="covered" data-hits="111" data-linenumber="137">
-          <span class="hits">111</span>
+        <li class="covered" data-hits="110" data-linenumber="137">
+          <span class="hits">110</span>
           
           <code class="ruby">        evaluation_stack.pop</code>
         </li>
@@ -18126,8 +18126,8 @@
           <code class="ruby">      def DUP</code>
         </li>
       
-        <li class="covered" data-hits="2536" data-linenumber="141">
-          <span class="hits">2536</span>
+        <li class="covered" data-hits="2871" data-linenumber="141">
+          <span class="hits">2871</span>
           
           <code class="ruby">        evaluation_stack.push evaluation_stack.peek</code>
         </li>
@@ -18264,20 +18264,20 @@
           <code class="ruby">      def ROLL</code>
         </li>
       
-        <li class="covered" data-hits="899" data-linenumber="164">
-          <span class="hits">899</span>
+        <li class="covered" data-hits="950" data-linenumber="164">
+          <span class="hits">950</span>
           
           <code class="ruby">        index = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="899" data-linenumber="165">
-          <span class="hits">899</span>
+        <li class="covered" data-hits="950" data-linenumber="165">
+          <span class="hits">950</span>
           
           <code class="ruby">        fault! if index.negative?</code>
         </li>
       
-        <li class="covered" data-hits="899" data-linenumber="166">
-          <span class="hits">899</span>
+        <li class="covered" data-hits="950" data-linenumber="166">
+          <span class="hits">950</span>
           
           <code class="ruby">        evaluation_stack.push evaluation_stack.remove(index) unless index.zero?</code>
         </li>
@@ -19080,20 +19080,20 @@
           <code class="ruby">      def ADD</code>
         </li>
       
-        <li class="covered" data-hits="335" data-linenumber="300">
-          <span class="hits">335</span>
+        <li class="covered" data-hits="406" data-linenumber="300">
+          <span class="hits">406</span>
           
           <code class="ruby">        rhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="335" data-linenumber="301">
-          <span class="hits">335</span>
+        <li class="covered" data-hits="406" data-linenumber="301">
+          <span class="hits">406</span>
           
           <code class="ruby">        lhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="335" data-linenumber="302">
-          <span class="hits">335</span>
+        <li class="covered" data-hits="406" data-linenumber="302">
+          <span class="hits">406</span>
           
           <code class="ruby">        evaluation_stack.push lhs + rhs</code>
         </li>
@@ -19152,20 +19152,20 @@
           <code class="ruby">      def MUL</code>
         </li>
       
-        <li class="covered" data-hits="12" data-linenumber="312">
-          <span class="hits">12</span>
+        <li class="covered" data-hits="11" data-linenumber="312">
+          <span class="hits">11</span>
           
           <code class="ruby">        rhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="12" data-linenumber="313">
-          <span class="hits">12</span>
+        <li class="covered" data-hits="11" data-linenumber="313">
+          <span class="hits">11</span>
           
           <code class="ruby">        lhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="12" data-linenumber="314">
-          <span class="hits">12</span>
+        <li class="covered" data-hits="11" data-linenumber="314">
+          <span class="hits">11</span>
           
           <code class="ruby">        evaluation_stack.push lhs * rhs</code>
         </li>
@@ -19188,20 +19188,20 @@
           <code class="ruby">      def DIV</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="318">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="5" data-linenumber="318">
+          <span class="hits">5</span>
           
           <code class="ruby">        rhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="319">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="5" data-linenumber="319">
+          <span class="hits">5</span>
           
           <code class="ruby">        lhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="320">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="5" data-linenumber="320">
+          <span class="hits">5</span>
           
           <code class="ruby">        evaluation_stack.push lhs / rhs</code>
         </li>
@@ -19296,20 +19296,20 @@
           <code class="ruby">      def SHR</code>
         </li>
       
-        <li class="covered" data-hits="35" data-linenumber="336">
-          <span class="hits">35</span>
+        <li class="covered" data-hits="123" data-linenumber="336">
+          <span class="hits">123</span>
           
           <code class="ruby">        rhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="35" data-linenumber="337">
-          <span class="hits">35</span>
+        <li class="covered" data-hits="123" data-linenumber="337">
+          <span class="hits">123</span>
           
           <code class="ruby">        lhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="35" data-linenumber="338">
-          <span class="hits">35</span>
+        <li class="covered" data-hits="123" data-linenumber="338">
+          <span class="hits">123</span>
           
           <code class="ruby">        evaluation_stack.push lhs &gt;&gt; rhs</code>
         </li>
@@ -19404,20 +19404,20 @@
           <code class="ruby">      def NUMEQUAL</code>
         </li>
       
-        <li class="covered" data-hits="87" data-linenumber="354">
-          <span class="hits">87</span>
+        <li class="covered" data-hits="175" data-linenumber="354">
+          <span class="hits">175</span>
           
           <code class="ruby">        rhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="87" data-linenumber="355">
-          <span class="hits">87</span>
+        <li class="covered" data-hits="175" data-linenumber="355">
+          <span class="hits">175</span>
           
           <code class="ruby">        lhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="87" data-linenumber="356">
-          <span class="hits">87</span>
+        <li class="covered" data-hits="175" data-linenumber="356">
+          <span class="hits">175</span>
           
           <code class="ruby">        evaluation_stack.push lhs == rhs</code>
         </li>
@@ -19476,20 +19476,20 @@
           <code class="ruby">      def LT</code>
         </li>
       
-        <li class="covered" data-hits="323" data-linenumber="366">
-          <span class="hits">323</span>
+        <li class="covered" data-hits="394" data-linenumber="366">
+          <span class="hits">394</span>
           
           <code class="ruby">        rhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="323" data-linenumber="367">
-          <span class="hits">323</span>
+        <li class="covered" data-hits="394" data-linenumber="367">
+          <span class="hits">394</span>
           
           <code class="ruby">        lhs = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="323" data-linenumber="368">
-          <span class="hits">323</span>
+        <li class="covered" data-hits="394" data-linenumber="368">
+          <span class="hits">394</span>
           
           <code class="ruby">        evaluation_stack.push lhs &lt; rhs</code>
         </li>
@@ -20334,26 +20334,26 @@
           <code class="ruby">      def PICKITEM</code>
         </li>
       
-        <li class="covered" data-hits="1649" data-linenumber="509">
-          <span class="hits">1649</span>
+        <li class="covered" data-hits="1933" data-linenumber="509">
+          <span class="hits">1933</span>
           
           <code class="ruby">        index = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="1649" data-linenumber="510">
-          <span class="hits">1649</span>
+        <li class="covered" data-hits="1933" data-linenumber="510">
+          <span class="hits">1933</span>
           
           <code class="ruby">        items = unwrap_array evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="1649" data-linenumber="511">
-          <span class="hits">1649</span>
+        <li class="covered" data-hits="1933" data-linenumber="511">
+          <span class="hits">1933</span>
           
           <code class="ruby">        fault! if index.negative? || index &gt;= items.length</code>
         </li>
       
-        <li class="covered" data-hits="1649" data-linenumber="512">
-          <span class="hits">1649</span>
+        <li class="covered" data-hits="1933" data-linenumber="512">
+          <span class="hits">1933</span>
           
           <code class="ruby">        evaluation_stack.push items[index]</code>
         </li>
@@ -20376,8 +20376,8 @@
           <code class="ruby">      def SETITEM</code>
         </li>
       
-        <li class="covered" data-hits="906" data-linenumber="516">
-          <span class="hits">906</span>
+        <li class="covered" data-hits="957" data-linenumber="516">
+          <span class="hits">957</span>
           
           <code class="ruby">        item = evaluation_stack.pop</code>
         </li>
@@ -20388,26 +20388,26 @@
           <code class="ruby">        # TODO: Clone struct?</code>
         </li>
       
-        <li class="covered" data-hits="906" data-linenumber="518">
-          <span class="hits">906</span>
+        <li class="covered" data-hits="957" data-linenumber="518">
+          <span class="hits">957</span>
           
           <code class="ruby">        index = unwrap_integer evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="906" data-linenumber="519">
-          <span class="hits">906</span>
+        <li class="covered" data-hits="957" data-linenumber="519">
+          <span class="hits">957</span>
           
           <code class="ruby">        items = unwrap_array evaluation_stack.pop</code>
         </li>
       
-        <li class="covered" data-hits="906" data-linenumber="520">
-          <span class="hits">906</span>
+        <li class="covered" data-hits="957" data-linenumber="520">
+          <span class="hits">957</span>
           
           <code class="ruby">        fault! if index.negative? || index &gt;= items.length</code>
         </li>
       
-        <li class="covered" data-hits="906" data-linenumber="521">
-          <span class="hits">906</span>
+        <li class="covered" data-hits="957" data-linenumber="521">
+          <span class="hits">957</span>
           
           <code class="ruby">        items[index] = item</code>
         </li>
@@ -20731,8 +20731,8 @@
           <code class="ruby">      def empty?</code>
         </li>
       
-        <li class="covered" data-hits="18361" data-linenumber="12">
-          <span class="hits">18361</span>
+        <li class="covered" data-hits="20557" data-linenumber="12">
+          <span class="hits">20557</span>
           
           <code class="ruby">        @items.empty?</code>
         </li>
@@ -20779,8 +20779,8 @@
           <code class="ruby">      def peek(n = 0)</code>
         </li>
       
-        <li class="covered" data-hits="41244" data-linenumber="20">
-          <span class="hits">41244</span>
+        <li class="covered" data-hits="46258" data-linenumber="20">
+          <span class="hits">46258</span>
           
           <code class="ruby">        @items[n]</code>
         </li>
@@ -20803,8 +20803,8 @@
           <code class="ruby">      def pop</code>
         </li>
       
-        <li class="covered" data-hits="14890" data-linenumber="24">
-          <span class="hits">14890</span>
+        <li class="covered" data-hits="17037" data-linenumber="24">
+          <span class="hits">17037</span>
           
           <code class="ruby">        @items.shift</code>
         </li>
@@ -20827,8 +20827,8 @@
           <code class="ruby">      def push(item)</code>
         </li>
       
-        <li class="covered" data-hits="15830" data-linenumber="28">
-          <span class="hits">15830</span>
+        <li class="covered" data-hits="18120" data-linenumber="28">
+          <span class="hits">18120</span>
           
           <code class="ruby">        @items.unshift item</code>
         </li>
@@ -20851,8 +20851,8 @@
           <code class="ruby">      def remove(index)</code>
         </li>
       
-        <li class="covered" data-hits="899" data-linenumber="32">
-          <span class="hits">899</span>
+        <li class="covered" data-hits="950" data-linenumber="32">
+          <span class="hits">950</span>
           
           <code class="ruby">        @items.delete_at index</code>
         </li>
