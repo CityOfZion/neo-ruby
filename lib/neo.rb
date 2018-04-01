@@ -1,19 +1,21 @@
-require 'set'
+# frozen_string_literal: true
 
-require 'neo/account'
-require 'neo/asset'
-require 'neo/block'
+require 'set'
 require 'neo/configuration'
-require 'neo/contract'
-require 'neo/key'
-require 'neo/network'
-require 'neo/node'
-require 'neo/remote_node'
-require 'neo/script'
-require 'neo/transaction'
-require 'neo/utils'
 require 'neo/version'
 
-# The main entry point for Neo.
+# Neo Smart Economy
 module Neo
+  autoload :ByteArray, 'neo/byte_array'
+  autoload :Account, 'neo/account'
+  autoload :Asset, 'neo/asset'
+  autoload :Block, 'neo/block'
+  autoload :Contract, 'neo/contract'
+  autoload :Key, 'neo/key'
+  autoload :Network, 'neo/network'
+  autoload :Node, 'neo/node'
+  autoload :RemoteNode, 'neo/remote_node'
+  autoload :Script, 'neo/script'
+  autoload :Transaction, 'neo/transaction'
+  autoload :Utils, 'neo/utils'
 end

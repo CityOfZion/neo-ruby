@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'neo/sdk'
+require 'pry'
+
+source = File.read "test/fixtures/source/#{ARGV[0]}.rb"
+
+puts "Compiling: \n\n#{source}\n\n"
+
+compiler = Neo::SDK::Compiler.new source
+
+puts
+puts compiler.tree
+puts
+
+script = Neo::SDK::Script.new(compiler.bytes)
+
+puts
+puts(Neo::SDK::Script::Dump.new(script).operation_details.map { |line| line.join(' ') })
+puts

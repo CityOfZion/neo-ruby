@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
@@ -7,10 +9,10 @@ Gem::Specification.new do |spec|
   spec.name          = 'neo-ruby'
   spec.version       = Neo.version
   spec.authors       = ['Jason L Perry']
-  spec.email         = ['jason@suncoast.io']
+  spec.email         = ['jason@cityofzion.io']
 
-  spec.summary       = 'Neo Ruby Library'
-  spec.description   = 'A Ruby library for interacting with the NEO blockchain.'
+  spec.summary       = 'Neo Ruby Library and SDK'
+  spec.description   = 'A Ruby library for interacting with and creating smart contracts the NEO blockchain.'
   spec.homepage      = 'https://github.com/CityOfZio/neo-ruby'
   spec.license       = 'MIT'
 
@@ -20,11 +22,17 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'eventmachine', '~> 1.2'
+  spec.add_dependency 'parser'
 
-  spec.add_development_dependency 'bundler', '~> 1.16'
+  spec.add_development_dependency 'bundler', '~> 1.16a'
+  spec.add_development_dependency 'coveralls'
+  spec.add_development_dependency 'guard', '~> 2.14'
+  spec.add_development_dependency 'guard-minitest', '~> 2.4'
+  spec.add_development_dependency 'guard-rubocop', '~> 1.3'
   spec.add_development_dependency 'minitest', '~> 5.0'
   spec.add_development_dependency 'minitest-autotest', '~> 1.0'
-  spec.add_development_dependency 'minitest-ci', '~> 3.4'
+  spec.add_development_dependency 'mocha'
+  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rubocop', '~> 0.52.0'
   spec.add_development_dependency 'vcr', '~> 4.0'

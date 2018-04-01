@@ -7,15 +7,15 @@
 <h1 align="center">neo-ruby</h1>
 
 <p align="center">
-  Neo Ruby Library.
+  Smart contract development and interaction with the Neo blockchain in Ruby.
 </p>
 
 <p align="center">
-  <a href="https://circleci.com/gh/CityOfZion/neo-ruby">
-    <img src="https://circleci.com/gh/CityOfZion/neo-ruby.svg?style=svg">
+  <a href="https://travis-ci.org/CityOfZion/neo-ruby">
+    <img src="https://travis-ci.org/CityOfZion/neo-ruby.svg?branch=master" alt='CI Status' />
   </a>
-  <a href="http://inch-ci.org/github/CityOfZion/neo-ruby">
-    <img src="http://inch-ci.org/github/CityOfZion/neo-ruby.svg?branch=master">
+  <a href='https://coveralls.io/github/CityOfZion/neo-ruby?branch=master'>
+    <img src='https://coveralls.io/repos/github/CityOfZion/neo-ruby/badge.svg?branch=master' alt='Coverage Status' />
   </a>
 </p>
 

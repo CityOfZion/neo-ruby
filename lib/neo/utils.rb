@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
 require 'neo/utils/data_reader'
 require 'neo/utils/data_writer'
 
 module Neo
   # Utility module
   module Utils
+    autoload :VarInt, 'neo/utils/var_int'
+
     def self.reverse_hex_string(hex)
       hex.scan(/../).reverse.join
     end
