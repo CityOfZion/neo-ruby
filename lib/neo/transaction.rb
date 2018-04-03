@@ -1,139 +1,70 @@
+require 'neo/transaction/attribute'
 require 'neo/transaction/input'
 require 'neo/transaction/output'
+require 'neo/utils/entity'
 
 module Neo
   # Represent a transaction on the Neo blockchain
   class Transaction
-    attr_reader :type,
-                :version,
+    include Neo::Utils::Entity
+
+    attr_reader :version,
                 :attributes,
                 :inputs,
                 :outputs,
                 :scripts
 
-    def initialize
-      @attributes = []
-      @inputs = []
-      @outputs = []
-      @scripts = []
-    end
-
-    def read(data)
-      @type = case data.read_byte
-              when 0x00 then :miner_transaction
-              when 0x01 then :issue_transaction
-              when 0x02 then :claim_transaction
-              when 0x20 then :enrollment_transaction
-              when 0x24 then :vote_transaction
-              when 0x40 then :register_transaction
-              when 0x80 then :contract_transaction
-              when 0xb0 then :agency_transaction
-              when 0xd0 then :publish_transaction
-              when 0xd1 then :invocation_transaction
-              end
-      @version = data.read_byte
-      read_exclusive_data(data)
-      read_attributes(data)
-      read_inputs(data)
-      read_outputs(data)
-      read_scripts(data)
-      self
-    end
-
-    # TODO: Refactor this mess
-    def read_exclusive_data(data)
-      case type
-      when :miner_transaction, :issue_transaction
-        @nonce = data.read_uint32
-        singleton_class.send :attr_reader, :nonce
-      when :claim_transaction
-        count = data.read_vint
-        @claims = []
-        count.times do
-          @claims << {
-            previous_hash: data.read_hex(32),
-            previous_index: data.read_uint16
-          }
-        end
-        singleton_class.send :attr_reader, :claims
-      when :enrollment_transaction
-        # TODO: This should be parsed correctly (ec_point)
-        @public_key = data.read_hex(33)
-        singleton_class.send :attr_reader, :public_key
-      when :register_transaction
-        @asset_type = data.read_uint8
-        @name = data.read_string
-        @amount = data.read_uint64
-        @issuer = data.read_hex 33
-        @admin = data.read_hex 20
-      when :publish_transaction
-        # TODO: Refactor this into contract model?
-        @function_code = data.read_hex
-        @params_list = data.read_hex
-        @return_type = data.read_hex 1
-        @needs_storage = version >= 1 ? data.read_bool : false
-        @name = data.read_string
-        @code_version = data.read_string
-        @author = data.read_string
-        @email = data.read_string
-        @description = data.read_string
-        singleton_class.send :attr_reader, :function_code, :needs_storage, :name, :code_version,
-                             :author, :email, :description
-      when :invocation_transaction
-        @script = Script.read(data)
-        @gas = data.read_fixed8
-      end
-    end
-
-    # TODO: Refactor hash to tx attribute model here
-    def read_attributes(data)
-      count = data.read_vint
-      count.times do
-        usage = data.read_uint8
-        case usage
-        when 0x00, 0x02, 0x03, 0x30, 0xa1..0xaf
-          @attributes << { usage: usage, data: data.read_hex(32) }
-        when 0x20
-          @attributes << { usage: usage, data: data.read_hex(20) }
-        else
-          # TODO: Parse into plain string?
-          @attributes << { usage: usage, data: data.read_hex }
-        end
-      end
-    end
-
-    def read_inputs(data)
-      count = data.read_vint
-      count.times do
-        input = Transaction::Input.new
-        input.previous_hash = data.read_hex 32
-        input.previous_index = data.read_uint16
-        @inputs << input
-      end
-    end
-
-    def read_outputs(data)
-      count = data.read_vint
-      count.times do
-        output = Transaction::Output.new
-        output.asset_id = data.read_hex 32
-        output.value = data.read_uint64
-        output.script_hash = data.read_hex 20
-        @outputs << output
-      end
-    end
-
-    def read_scripts(data)
-      count = data.read_vint
-      count.times do
-        @scripts << Script.read(data)
-      end
-    end
-
     class << self
       def read(data)
-        tx = Transaction.new
-        tx.read(data)
+        byte = data.read_byte
+        subclass = subclasses.find { |klass| klass::BYTE_ID == byte }
+        raise UnknownTransactionTypeError unless subclass
+        attrs = {version: subclass.read_version(data)}
+        attrs.merge! subclass.read_type_attributes(data, attrs[:version])
+        attrs.merge!(
+          attributes: subclass.read_attributes(data),
+          inputs: subclass.read_inputs(data),
+          outputs: subclass.read_outputs(data),
+          scripts: subclass.read_scripts(data)
+        )
+        subclass.new(**attrs)
+      end
+
+      def read_version(data)
+        data.read_byte
+      end
+
+      # Provides a hook for subclasses to provide attributes that are specific
+      # to each transaction type. Should return a hash of attributes.
+      def read_type_attributes(_data, _version)
+        {}
+      end
+
+      def read_attributes(data)
+        Array.new(data.read_vint) { Transaction::Attribute.read data }
+      end
+
+      def read_inputs(data)
+        Array.new(data.read_vint) do
+          Transaction::Input.new(
+            previous_hash: data.read_hex(32),
+            previous_index: data.read_uint16
+          )
+        end
+      end
+
+      def read_outputs(data)
+        Array.new(data.read_vint) do
+          Transaction::Output.new(
+            asset_id: data.read_hex(32),
+            value: data.read_uint64,
+            script_hash: data.read_hex(20)
+          )
+        end
+      end
+
+      def read_scripts(data)
+        Array.new(data.read_vint) { Script.read(data) }
       end
 
       def mempool
@@ -148,6 +79,138 @@ module Neo
         data = RemoteNode.rpc 'getrawtransaction', txid
         read Utils::DataReader.new(data, true)
       end
+
+      def subclasses
+        [
+          MinerTransaction, IssueTransaction, ClaimTransaction,
+          EnrollmentTransaction, VoteTransaction, RegisterTransaction,
+          ContractTransaction, AgencyTransaction, PublishTransaction,
+          InvocationTransaction
+        ]
+      end
     end
   end
+
+  class MinerTransaction < Transaction
+    BYTE_ID = 0x00
+
+    attr_reader :nonce
+
+    class << self
+      def read_type_attributes(data, _version)
+        { nonce: data.read_uint32 }
+      end
+    end
+  end
+
+  class IssueTransaction < Transaction
+    BYTE_ID = 0x01
+
+    attr_reader :nonce
+
+    class << self
+      def read_type_attributes(data, _version)
+        { nonce: data.read_uint32 }
+      end
+    end
+  end
+
+  class ClaimTransaction < Transaction
+    BYTE_ID = 0x02
+
+    attr_reader :claims
+
+    class << self
+      def read_type_attributes(data, _version)
+        {
+          claims: Array.new(data.read_vint) do
+            {
+              previous_hash: data.read_hex(32),
+              previous_index: data.read_uint16
+            }
+          end
+        }
+      end
+    end
+  end
+
+  class EnrollmentTransaction < Transaction
+    BYTE_ID = 0x20
+
+    attr_reader :public_key
+
+    class << self
+      def read_type_attributes(data, _version)
+        # TODO: This should be parsed correctly (ec_point)
+        { public_key: data.read_hex(33) }
+      end
+    end
+  end
+
+  class VoteTransaction < Transaction
+    BYTE_ID = 0x24
+  end
+
+  class RegisterTransaction < Transaction
+    BYTE_ID = 0x40
+
+    class << self
+      def read_type_attributes(data, _version)
+        {
+          asset_type: data.read_uint8,
+          name: data.read_string,
+          amount: data.read_uint64,
+          issuer: data.read_hex(33),
+          admin: data.read_hex(20)
+        }
+      end
+    end
+  end
+
+  class ContractTransaction < Transaction
+    BYTE_ID = 0x80
+  end
+
+  class AgencyTransaction < Transaction
+    BYTE_ID = 0xb0
+  end
+
+  class PublishTransaction < Transaction
+    BYTE_ID = 0xd0
+
+    attr_reader :function_code, :needs_storage, :name, :code_version, :author,
+                :email, :description
+
+    class << self
+      def read_type_attributes(data, version)
+        # TODO: Refactor this into contract model?
+        {
+          function_code: data.read_hex,
+          params_list: data.read_hex,
+          return_type: data.read_hex(1),
+          needs_storage: version >= 1 ? data.read_bool : false,
+          name: data.read_string,
+          code_version: data.read_string,
+          author: data.read_string,
+          email: data.read_string,
+          description: data.read_string
+        }
+      end
+    end
+  end
+
+  class InvocationTransaction < Transaction
+    BYTE_ID = 0xd1
+
+    class << self
+      def read_type_attributes(data, _version)
+        {
+          script: Script.read(data),
+          gas: data.read_fixed8,
+        }
+      end
+    end
+  end
+
+  class UnknownTransactionTypeError < RuntimeError; end
 end

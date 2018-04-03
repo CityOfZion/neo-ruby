@@ -1,6 +1,10 @@
+require 'neo/utils/entity'
+
 module Neo
   # Represents an asset on the Neo blockchain
   class Asset
+    include Neo::Utils::Entity
+
     GAS_ID = 0x602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7
     NEO_ID = 0xc56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b
 
@@ -16,17 +20,13 @@ module Neo
 
     class << self
       def neo
-        create RemoteNode.rpc('getassetstate', NEO_ID.to_s(16))
+        data = RemoteNode.rpc 'getassetstate', NEO_ID.to_s(16)
+        new(**(data.each_with_object({}) { |(k,v), h| h[k.to_sym] = v }))
       end
 
       def gas
-        create RemoteNode.rpc('getassetstate', GAS_ID.to_s(16))
-      end
-
-      def create(data)
-        asset = Asset.new
-        data.each { |k, v| asset.send "#{k}=", v }
-        asset
+        data = RemoteNode.rpc 'getassetstate', GAS_ID.to_s(16)
+        new(**(data.each_with_object({}) { |(k,v), h| h[k.to_sym] = v }))
       end
     end
   end
