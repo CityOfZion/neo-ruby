@@ -8,6 +8,12 @@ module Neo
       alias n= index=
       alias asset= asset_id=
 
+      def initialize(asset_id = nil, value = nil, script_hash = nil)
+        self.asset_id = asset_id
+        self.value = value
+        self.script_hash = script_hash
+      end
+
       def address
         @address || Key.script_hash_to_address(@script_hash)
       end
