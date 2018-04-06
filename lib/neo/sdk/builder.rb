@@ -22,7 +22,6 @@ module Neo
         operation
       end
 
-      # rubocop:disable Metrics/CyclomaticComplexity
       def emit_push(data)
         case data
         when true      then emit :PUSHT
@@ -38,7 +37,6 @@ module Neo
         end
         # :nocov:
       end
-      # rubocop:enable Metrics/CyclomaticComplexity
 
       def emit_app_call(script_hash, params: [], use_tail_call: false)
         params.reverse.each do |param|
