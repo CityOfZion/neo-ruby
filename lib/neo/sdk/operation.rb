@@ -2,7 +2,7 @@
 
 module Neo
   module SDK
-    # Intermediate Represenation of a VM Opcode
+    # Intermediate Representation of a VM Opcode
     class Operation
       attr_accessor :name, :address, :data, :scope
 
@@ -31,11 +31,7 @@ module Neo
             @bytes << byte
           end
         when String
-          @bytes << Neo::Utils::VarInt.encode(data.length)
-          byte_string = ByteArray.new [data].pack("a#{data.length}")
-          byte_string.bytes.each do |byte|
-            @bytes << byte
-          end
+          bytes_data_string(@bytes)
         when Symbol, Operation
           @bytes << 0x00
           @bytes << 0x00
@@ -49,6 +45,17 @@ module Neo
       def update(name: nil, data: nil)
         @name = name if name
         @data = data if data
+      end
+
+      private
+
+      # Pushes self.data string to a buffer
+      def bytes_data_string(bytes_buf)
+        bytes_buf << Neo::Utils::VarInt.encode(data.length)
+        byte_string = ByteArray.new [data].pack("a#{data.length}")
+        byte_string.bytes.each do |byte|
+          bytes_buf << byte
+        end
       end
     end
   end

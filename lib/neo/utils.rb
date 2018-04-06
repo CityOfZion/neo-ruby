@@ -33,7 +33,7 @@ module Neo
       def self.encode(n)
         return ALPHABET[0] if n.zero?
         buffer = ''
-        while n > 0
+        while n.positive?
           remainder = n % BASE
           n /= BASE
           buffer = ALPHABET[remainder] + buffer
