@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   class Transaction
     # Represents a transaction output on the Neo blockchain.

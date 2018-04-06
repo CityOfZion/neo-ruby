@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #:nodoc:
 module Neo
   # @return [String] the current version.

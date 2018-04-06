@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   module Utils
     # Utility class for writing serialized data
@@ -61,7 +63,7 @@ module Neo
       end
 
       def inspect
-        @io.string.unpack('H*').first
+        @io.string.unpack1('H*')
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   class Node
     attr_reader :known_hashes, :node_id

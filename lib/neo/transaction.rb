@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'neo/transaction/input'
 require 'neo/transaction/output'
 

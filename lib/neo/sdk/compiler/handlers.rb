@@ -25,25 +25,25 @@ module Neo
           :>>     => :SHR,
           :-@     => :NEGATE,
           :"eql?" => :EQUAL,
-          :"verify_signature" => :CHECKSIG
+          :verify_signature => :CHECKSIG
         }.freeze
 
-        NAMESPACES = [
-          :Account,
-          :Asset,
-          :Attribute,
-          :Block,
-          :Blockchain,
-          :Contract,
-          :Enrollment,
-          :ExecutionEngine,
-          :Header,
-          :Input,
-          :Output,
-          :Runtime,
-          :Storage,
-          :Transaction,
-          :Validator
+        NAMESPACES = %i[
+          Account
+          Asset
+          Attribute
+          Block
+          Blockchain
+          Contract
+          Enrollment
+          ExecutionEngine
+          Header
+          Input
+          Output
+          Runtime
+          Storage
+          Transaction
+          Validator
         ].freeze
 
         def on_begin(node)
@@ -225,7 +225,7 @@ module Neo
               mod, klass = *receiver
               if !mod && NAMESPACES.include?(klass)
                 prefix = klass == :ExecutionEngine ? 'System' : 'Neo'
-                method = name.to_s.capitalize.gsub(/_([a-z])/) { $1.capitalize }
+                method = name.to_s.capitalize.gsub(/_([a-z])/) { Regexp.last_match(1).capitalize }
                 emit :SYSCALL, [prefix, klass, method].join('.')
               end
             else
