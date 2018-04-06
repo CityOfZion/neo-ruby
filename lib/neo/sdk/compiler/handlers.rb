@@ -25,31 +25,32 @@ module Neo
           :>>     => :SHR,
           :-@     => :NEGATE,
           :"eql?" => :EQUAL,
-          :"verify_signature" => :CHECKSIG
+          :verify_signature => :CHECKSIG
         }.freeze
 
-        NAMESPACES = [
-          :Account,
-          :Asset,
-          :Attribute,
-          :Block,
-          :Blockchain,
-          :Contract,
-          :Enrollment,
-          :ExecutionEngine,
-          :Header,
-          :Input,
-          :Output,
-          :Runtime,
-          :Storage,
-          :Transaction,
-          :Validator
+        NAMESPACES = %i[
+          Account
+          Asset
+          Attribute
+          Block
+          Blockchain
+          Contract
+          Enrollment
+          ExecutionEngine
+          Header
+          Input
+          Output
+          Runtime
+          Storage
+          Transaction
+          Validator
         ].freeze
 
         def on_begin(node)
           node.children.each { |c| process(c) }
         end
 
+        # rubocop:disable Metrics/AbcSize
         def on_def(node)
           name, args_node, body_node = *node
           if name == :main
@@ -73,6 +74,7 @@ module Neo
           end
           logger.info "Method `#{name}` defined."
         end
+        # rubocop:enable Metrics/AbcSize
 
         def on_return(node)
           super
@@ -206,6 +208,7 @@ module Neo
           emit :PICKITEM
         end
 
+        # rubocop:disable Metrics/AbcSize
         def on_send(node)
           super
           receiver, name, *_args = *node
@@ -225,7 +228,7 @@ module Neo
               mod, klass = *receiver
               if !mod && NAMESPACES.include?(klass)
                 prefix = klass == :ExecutionEngine ? 'System' : 'Neo'
-                method = name.to_s.capitalize.gsub(/_([a-z])/) { $1.capitalize }
+                method = name.to_s.capitalize.gsub(/_([a-z])/) { Regexp.last_match(1).capitalize }
                 emit :SYSCALL, [prefix, klass, method].join('.')
               end
             else
@@ -233,6 +236,7 @@ module Neo
             end
           end
         end
+        # rubocop:enable Metrics/AbcSize
 
         def on_str(node)
           value, = *node

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   # Represents an asset on the Neo blockchain
   class Asset

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'eventmachine'
 require 'neo/network/handler'
 require 'neo/network/events'

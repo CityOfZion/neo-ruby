@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   # Represents a block in the Neo blockchain
   class Block
@@ -82,7 +84,6 @@ module Neo
     end
 
     class << self
-
       # Parse a block from raw data
       #
       # @param data [Utils::DataReader] binary data to parse

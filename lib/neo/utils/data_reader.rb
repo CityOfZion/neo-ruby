@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   module Utils
     # Utility class for reading serialized data
@@ -58,11 +60,11 @@ module Neo
       end
 
       def read(size, format)
-        @io.read(size).unpack(format).first
+        @io.read(size).unpack1(format)
       end
 
       def inspect
-        @io.string.unpack('H*').first
+        @io.string.unpack1('H*')
       end
 
       def move_to(position)

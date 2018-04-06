@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'neo/transaction/input'
 require 'neo/transaction/output'
 
@@ -41,6 +43,8 @@ module Neo
     end
 
     # TODO: Refactor this mess
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def read_exclusive_data(data)
       case type
       when :miner_transaction, :issue_transaction
@@ -84,6 +88,8 @@ module Neo
         @gas = data.read_fixed8
       end
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     # TODO: Refactor hash to tx attribute model here
     def read_attributes(data)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   module Network
     class Connection < EventMachine::Connection
@@ -58,9 +60,9 @@ module Neo
 
       def post_init
         log "Connecting to #{@host} on #{@port}."
-        EM.next_tick {
+        EM.next_tick do
           send_packet VersionPayload.new(@port, @local_node.node_id, @local_node.last_height)
-        }
+        end
       end
 
       def receive_data(data)

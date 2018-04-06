@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'openssl'
 
 module Neo
   # Represents a Neo private/public key pair
   class Key
-    DEFAULT_ADDRESS_VERSION = '17'.freeze
-    PUSHBYTES33 = '21'.freeze
-    CHECKSIG = 'ac'.freeze
-    WIF_PREFIX = '80'.freeze # MainNet
-    WIF_SUFFIX = '01'.freeze # Compressed
+    DEFAULT_ADDRESS_VERSION = '17'
+    PUSHBYTES33 = '21'
+    CHECKSIG = 'ac'
+    WIF_PREFIX = '80' # MainNet
+    WIF_SUFFIX = '01' # Compressed
 
     def initialize(address_version = DEFAULT_ADDRESS_VERSION)
       @address_version = address_version

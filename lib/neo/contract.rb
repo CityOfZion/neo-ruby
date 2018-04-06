@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   # Represent a smart contract on the Neo blockchain
   class Contract

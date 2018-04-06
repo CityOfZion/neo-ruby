@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   module Network
     module Handler
@@ -16,9 +18,7 @@ module Neo
         when :block
           hashes = Set.new inv.hashes
           unknown_hashes = hashes - @local_node.known_hashes
-          unless unknown_hashes.length.zero?
-            enqueue_message InvPayload.new(:block, unknown_hashes, 'getdata')
-          end
+          enqueue_message InvPayload.new(:block, unknown_hashes, 'getdata') unless unknown_hashes.length.zero?
         else
           puts inv.inspect
         end
@@ -36,7 +36,7 @@ module Neo
       private
 
       def method_missing(method_name, *_arguments)
-        if method_name =~ /^handle_/
+        if method_name.match?(/^handle_/)
           log method_name, 'Not implemented'
         else
           super

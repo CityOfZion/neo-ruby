@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   module Network
     class VerackPayload < Message

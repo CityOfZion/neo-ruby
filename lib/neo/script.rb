@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   class Script
     attr_reader :verify, :invoke

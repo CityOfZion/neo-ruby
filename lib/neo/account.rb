@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Neo
   # Represents an account on the Neo Blockchain
   class Account
@@ -14,7 +16,6 @@ module Neo
     end
 
     class << self
-
       def get(address)
         data = RemoteNode.rpc 'getaccountstate', address
         data.each_with_object(Account.new) do |(k, v), account|

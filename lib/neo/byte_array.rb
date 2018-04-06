@@ -52,24 +52,24 @@ module Neo
     end
 
     def to_hex_string(prefix: false)
-      hex = data.unpack('H*').first
+      hex = data.unpack1('H*')
       prefix ? '0x' + hex : hex
     end
 
     def to_int16
-      data.unpack('s').first
+      data.unpack1('s')
     end
 
     def to_uint16
-      data.unpack('S').first
+      data.unpack1('S')
     end
 
     def to_int32
-      data.unpack('l').first
+      data.unpack1('l')
     end
 
     def to_uint32
-      data.unpack('L').first
+      data.unpack1('L')
     end
 
     def to_integer
