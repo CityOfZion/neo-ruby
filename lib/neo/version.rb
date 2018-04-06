@@ -11,7 +11,7 @@ module Neo
   #   * `parts` [Array<Integer>] List of the version parts.
   def version
     @version ||= begin
-      string = '0.0.0'.dup
+      string = +'0.0.0'
 
       def string.parts
         split('.').map(&:to_i)
