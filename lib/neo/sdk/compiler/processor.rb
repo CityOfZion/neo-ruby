@@ -62,10 +62,10 @@ module Neo
           record builder.emit_push(data)
         end
 
-        def record(op)
-          op.scope = self
-          @first ||= op
-          @last = op
+        def record(operation)
+          operation.scope = self
+          @first ||= operation
+          @last = operation
         end
 
         def emit_method(name)

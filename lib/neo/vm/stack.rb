@@ -16,8 +16,8 @@ module Neo
         @items.insert index, item
       end
 
-      def peek(n = 0)
-        @items[n]
+      def peek(idx = 0)
+        @items[idx]
       end
 
       def pop

@@ -43,16 +43,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 11
 
-# Offense count: 4
-# Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
-# AllowedNames: io, id, to
-Naming/UncommunicativeMethodParamName:
-  Exclude:
-    - 'lib/neo/sdk/compiler/processor.rb'
-    - 'lib/neo/utils.rb'
-    - 'lib/neo/vm/context.rb'
-    - 'lib/neo/vm/stack.rb'
-
 # Offense count: 15
 Style/Documentation:
   Exclude:
@@ -73,9 +63,3 @@ Style/Documentation:
     - 'lib/neo/script.rb'
     - 'lib/neo/transaction/miner.rb'
     - 'lib/neo/utils/var_int.rb'
-
-# Offense count: 1
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Exclude:
-    - 'lib/neo/sdk/compiler/handlers.rb'
