@@ -138,15 +138,15 @@ module Neo
         def on_const(node)
           super
           _mod, klass = *node
-          position = find_local klass
 
-          if position
-            emit :FROMALTSTACK
-            emit :DUP
-            emit :TOALTSTACK
-            emit_push position
-            emit :PICKITEM
-          end
+          position = find_local klass
+          return unless position
+
+          emit :FROMALTSTACK
+          emit :DUP
+          emit :TOALTSTACK
+          emit_push position
+          emit :PICKITEM
         end
 
         # TODO: Refactor to remove duplication with on_args
