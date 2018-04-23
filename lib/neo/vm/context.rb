@@ -23,9 +23,9 @@ module Neo
         byte
       end
 
-      def read_bytes(n)
+      def read_bytes(num)
         bytes = []
-        n.times { bytes << read_byte }
+        num.times { bytes << read_byte }
         ByteArray.new(bytes)
       end
 

@@ -30,12 +30,12 @@ module Neo
 
       BASE = ALPHABET.length
 
-      def self.encode(n)
-        return ALPHABET[0] if n.zero?
+      def self.encode(num)
+        return ALPHABET[0] if num.zero?
         buffer = ''
-        while n.positive?
-          remainder = n % BASE
-          n /= BASE
+        while num.positive?
+          remainder = num % BASE
+          num /= BASE
           buffer = ALPHABET[remainder] + buffer
         end
         buffer
