@@ -1,3 +1,5 @@
 test/reports
 *.gem
 coverage
+.data/*
+!.data/.keep

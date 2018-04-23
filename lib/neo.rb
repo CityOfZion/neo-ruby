@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'set'
+require 'sdbm'
 require 'neo/configuration'
 require 'neo/version'
 

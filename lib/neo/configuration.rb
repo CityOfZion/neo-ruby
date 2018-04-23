@@ -17,14 +17,17 @@ module Neo
       'TestNet' => 'Antt'
     }.freeze
 
+    DEFAULT_DB_PATH = File.join(__dir__, '..', '..', '.data')
+
     def initialize
       self.rpc_nodes = Set.new
       self.p2p_nodes = Set.new
       self.network = 'TestNet'
       self.magic_word = DEFAULT_MAGIC[network]
+      self.db_path = DEFAULT_DB_PATH
     end
 
-    attr_accessor :rpc_nodes, :p2p_nodes, :magic_word
+    attr_accessor :rpc_nodes, :p2p_nodes, :magic_word, :db_path
 
     attr_reader :network
 

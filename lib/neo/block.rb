@@ -22,7 +22,10 @@ module Neo
       @transactions = []
     end
 
+    # NOTE: Possible refactor might be to use instance variable / attribute for `data` and not pass it around as a
+    # parameter to the parsing / serialization methods.
     def read(data)
+      @data = data
       parse_header data
       parse_body data
       self
@@ -81,6 +84,15 @@ module Neo
       hash1 = Digest::SHA256.digest(data.io.string)
       hash2 = Digest::SHA256.hexdigest(hash1)
       Utils.reverse_hex_string(hash2)
+    end
+
+    # Persist the block to storage
+    # TODO: Refactor SDBM calls to a DB class that provides simple
+    # (replaceable?) API that can be used throughout the library.
+    def store
+      SDBM.open File.join(Neo.config.db_path, 'block') do |db|
+        db[block_hash] = data.io.string
+      end
     end
 
     class << self

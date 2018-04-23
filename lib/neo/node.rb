@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'eventmachine'
+
 module Neo
   class Node
     attr_reader :known_hashes, :node_id

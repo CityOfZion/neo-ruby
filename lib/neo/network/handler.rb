@@ -26,6 +26,7 @@ module Neo
 
       def handle_block(payload)
         block_payload = BlockPayload.read payload
+        block_payload.block.store
         @callbacks[:block].each { |c| c.call block_payload.block }
       end
 
