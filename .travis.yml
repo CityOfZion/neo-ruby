@@ -1,3 +1,16 @@
 language: ruby
-rvm:
- - 2.4
+cache:
+  bundler: true
+before_install:
+  - gem install bundler
+matrix:
+  include:
+    - rvm: 2.3
+    - rvm: 2.4
+    - rvm: 2.5
+    - rvm: ruby-head
+  allow_failures:
+    - rvm: ruby-head
+script:
+  - bundle exec rake test
+  - bundle exec rubocop

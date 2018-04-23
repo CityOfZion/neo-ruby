@@ -60,11 +60,11 @@ module Neo
       end
 
       def read(size, format)
-        @io.read(size).unpack1(format)
+        @io.read(size).unpack(format).first
       end
 
       def inspect
-        @io.string.unpack1('H*')
+        @io.string.unpack('H*').first
       end
 
       def move_to(position)

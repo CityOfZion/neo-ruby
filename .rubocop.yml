@@ -1,13 +1,22 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.5
+  DisplayCopNames: true
+  TargetRubyVersion: 2.3
   Exclude:
     - 'test/**/*'
     - 'lib/neo/sdk/simulation/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+
+Metrics/BlockLength:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 120
+
 Metrics/AbcSize:
   Max: 24
+
 Metrics/MethodLength:
   Max: 24

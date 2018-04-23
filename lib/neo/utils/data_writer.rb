@@ -63,7 +63,7 @@ module Neo
       end
 
       def inspect
-        @io.string.unpack1('H*')
+        @io.string.unpack('H*').first
       end
     end
   end

@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ['lib']
 
+  spec.required_ruby_version = '>= 2.3.0'
+
   spec.add_dependency 'eventmachine', '~> 1.2'
   spec.add_dependency 'parser'
 
